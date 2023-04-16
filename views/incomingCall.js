@@ -5,9 +5,9 @@ import { VStack, Box, Divider, Avatar, HStack, Button } from "@react-native-mate
 export default function IncomingCall(props) {
   return (
     <View style={styles.container}>
-      <VStack m={4} spacing={2}>
+      <VStack m={"4"} spacing={"2"}>
         {/* Title */}
-        <Box mt={"4em"} pb={"3em"}>
+        <Box mt={"4"} pb={"3"}>
           <Text style={styles.title}>'{props.space.name}' has Started</Text>
           <Text style={styles.subtitle}>{props.space.speakers.length} speaker{props.space.speakers.length == 1 ? '' : 's'}</Text>
         </Box>
@@ -21,9 +21,9 @@ export default function IncomingCall(props) {
           ))}
         </HStack>
         {/* Platform effect */}
-        <Box style={styles.platform}/>
+        <Box style={styles.platform} />
         {/* Buttons */}
-        <VStack m={"4em"} spacing={"1em"}>
+        <VStack m={"4"} spacing={"1"}>
           <Button style={styles.button} title="Join" color="#66bb6a" />
           <Button style={styles.button} title="Ignore" color="#f44336" />
         </VStack>
@@ -34,28 +34,28 @@ export default function IncomingCall(props) {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: "2em",
+    fontSize: "2",
     color: '#FFFFFF',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: "0.8em",
+    fontSize: "1",
     color: '#FFFFFF',
     textAlign: 'center',
   },
   button: {
-    padding: "0.5em"
+    padding: "0.5"
   },
   platform: {
     backgroundColor: "transparent",
     alignSelf: 'stretch',
     borderColor: "transparent",
-    borderBottomWidth: "10px",
+    borderBottomWidth: "1",
     borderBottomColor: "#404040",
-    borderLeftWidth: "20px",
-    borderRightWidth: "20px",
-    marginHorizontal: "5px",
-    marginTop: "-7px",
+    borderLeftWidth: "20",
+    borderRightWidth: "20",
+    marginHorizontal: "5",
+    marginTop: "-7",
     zIndex: 1,
   },
   container: {
