@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
-import { Button, Stack, TextInput } from "@react-native-material/core";
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button, Flex, Stack, TextInput, IconButton } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
 const BasicModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
@@ -30,6 +32,8 @@ const BasicModal = () => {
                                 keyboardType='default'
                             />
                         </Stack>
+                    <Flex style={{ width: "100%", position: 'absolute', bottom: 0, marginBottom: 16 }}
+                        direction='row' justify='evenly' fill wrap="nowrap" spacing={18}>
                         <Button
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
@@ -37,6 +41,11 @@ const BasicModal = () => {
                             title="Submit"
                             tintColor='white'
                         />
+                        <IconButton
+                            onPress={() => setModalVisible(!modalVisible)}
+                            icon={props => <Icon name='clock' {...props} />}
+                        />
+                    </Flex>
                     </View>
                 </TouchableOpacity>
             </Modal >
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
     modalView: {
         height: '50%',
         marginTop: 'auto',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#FFF4F1',
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
         padding: 20,
@@ -81,14 +90,12 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     buttonOpen: {
-        backgroundColor: '#F194FF',
+        backgroundColor: '#FFF4F1',
         width: '50%',
     },
     buttonClose: {
-        backgroundColor: '#ffb9c3',
-        position: 'absolute',
-        bottom: 0,
-        marginBottom: 16,
+        backgroundColor: '#BD827D',
+        padding: 8,
     },
     textStyle: {
         color: 'white',
