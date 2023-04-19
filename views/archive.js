@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SectionList, ScrollView, Pressable, Modal } from 'react-native';
-import { VStack, Button, } from "@react-native-material/core";
+import { StyleSheet, Text, View, SectionList, Image, Pressable, Modal } from 'react-native';
+import { VStack, Button, HStack } from "@react-native-material/core";
 
 const dummyPodcasts = [
     'Podcast #1 - Welcome to our podcast!',
@@ -25,10 +25,11 @@ const dummyDiscusions = [
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [currentData, setData] = useState("asdasd")
+    const [currentData, setData] = useState("")
 
     return (
         <View style={styles.container}>
+
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -36,24 +37,30 @@ export default function Archive({ navigation }) {
                 onRequestClose={() => {
                     setModalVisible(!modalVisible);
                 }}>
-                <View style={styles.container}>
-                    <Text style={styles.modalTitle}>{currentData}</Text>
+
+                <View style={styles.modalView}>
+                    <View style={styles.container}>
+                        <Text style={styles.modalTitle}>{currentData}</Text>
+                    </View>
+
+                    <View>
+                        <Button style={styles.button} title="Back" color="purple"
+                            onPress={() => setModalVisible(!modalVisible)} />
+                    </View>
                 </View>
 
-                <View style={styles.container}>
-                    <Button style={styles.button} title="Back" color="purple"
-                        onPress={() => setModalVisible(!modalVisible)} />
-                </View>
             </Modal>
 
+            <HStack>
+                <Text style={styles.title}>Archive</Text>
+            </HStack>
 
-            <Text style={styles.title}>Archive</Text>
             <SectionList
                 sections={[
                     { title: 'Podcasts', data: dummyPodcasts },
                     { title: 'Discussions', data: dummyDiscusions },
+                    { title: 'Empty test', data: '' }
                 ]}
-
                 renderItem={({ item }) =>
                     <Pressable
                         onPress={() => {
@@ -66,20 +73,16 @@ export default function Archive({ navigation }) {
                         ]}>
                         <Text style={styles.item}>{item}</Text>
                     </Pressable>}
-
                 renderSectionHeader={({ section }) => (
                     <Text style={styles.sectionHeader}>{section.title}</Text>
                 )}
-
-
                 keyExtractor={item => `basicListEntry-${item}`}
             />
 
-            <View>
-                <Button style={styles.button} title="Go back" color="purple"
+            <HStack>
+                <Button style={[styles.button]} title="Go back" color="purple"
                     onPress={() => navigation.navigate('Call')} />
-            </View>
-
+            </HStack>
 
         </View>
     )
@@ -100,18 +103,6 @@ const styles = StyleSheet.create({
     },
     button: {
         padding: 4
-    },
-    platform: {
-        backgroundColor: "transparent",
-        alignSelf: 'stretch',
-        borderColor: "transparent",
-        borderBottomWidth: 1,
-        borderBottomColor: "#404040",
-        borderLeftWidth: 20,
-        borderRightWidth: 20,
-        marginHorizontal: 5,
-        marginTop: 28,
-        zIndex: 1,
     },
     container: {
         flex: 1,
@@ -138,9 +129,15 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 5,
     },
+    modalView: {
+        flex: 1,
+        paddingTop: '60%',
+        height: '40%',
+    },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
+        textAlign: 'center',
     },
 });
