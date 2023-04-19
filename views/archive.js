@@ -1,10 +1,21 @@
-import { StyleSheet, Text, View, SectionList } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, SectionList, ScrollView, Pressable, Modal } from 'react-native';
 import { VStack, Button, } from "@react-native-material/core";
 
 const dummyPodcasts = [
     'Podcast #1 - Welcome to our podcast!',
     'Podcast #2 - Heated discussion with the hosts',
     'Podcast #3 - Viewer Q&A',
+    'Dummy Podcast 1',
+    'Dummy Podcast 2',
+    'Dummy Podcast 3',
+    'Dummy Podcast 4',
+    'Dummy Podcast 5',
+    'Dummy Podcast 6',
+    'Dummy Podcast 7',
+    'Dummy Podcast 8',
+    'Dummy Podcast 9',
+    'Dummy Podcast 10',
 ]
 
 const dummyDiscusions = [
@@ -13,25 +24,63 @@ const dummyDiscusions = [
 ]
 
 export default function Archive({ navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [currentData, setData] = useState("asdasd")
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>ARCHIVE</Text>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}>
+                <View style={styles.container}>
+                    <Text style={styles.modalTitle}>{currentData}</Text>
+                </View>
+
+                <View style={styles.container}>
+                    <Button style={styles.button} title="Back" color="purple"
+                        onPress={() => setModalVisible(!modalVisible)} />
+                </View>
+            </Modal>
+
+
+            <Text style={styles.title}>Archive</Text>
             <SectionList
                 sections={[
                     { title: 'Podcasts', data: dummyPodcasts },
                     { title: 'Discussions', data: dummyDiscusions },
                 ]}
-                renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+
+                renderItem={({ item }) =>
+                    <Pressable
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                            setData(item);
+                        }}
+                        style={({ pressed }) => [{
+                            backgroundColor: pressed ? 'grey' : 'transparent',
+                        },
+                        ]}>
+                        <Text style={styles.item}>{item}</Text>
+                    </Pressable>}
+
                 renderSectionHeader={({ section }) => (
                     <Text style={styles.sectionHeader}>{section.title}</Text>
                 )}
+
+
                 keyExtractor={item => `basicListEntry-${item}`}
             />
 
-            <VStack m={4} spacing={2}>
-                <Button style={styles.button} title="Go back" color="blue"
+            <View>
+                <Button style={styles.button} title="Go back" color="purple"
                     onPress={() => navigation.navigate('Call')} />
-            </VStack>
+            </View>
+
+
         </View>
     )
 
@@ -69,8 +118,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#303030',
         color: '#FFFFFF',
         alignItems: 'center',
-        paddingVertical: 50,
+        paddingVertical: 25,
     },
+    // Headers in the list view
     sectionHeader: {
         paddingTop: 2,
         paddingLeft: 10,
@@ -81,10 +131,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         color: 'white'
     },
+    // Items in the list view
     item: {
         backgroundColor: 'transparent',
         fontSize: 20,
         color: 'white',
         padding: 5,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
     },
 });
