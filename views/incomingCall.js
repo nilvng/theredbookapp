@@ -57,7 +57,7 @@ export default function IncomingCall( { navigation } ) {
         <VStack m={4} spacing={8}>
           <Button style={styles.button} title="Join" color="#66bb6a" />
           <Button style={styles.button} title="Ignore" color="#f44336" />
-          <Button style={styles.button} title="Archive" color="blue" 
+          <Button style={styles.button} title="Archive" color="purple" 
           onPress={() => navigation.navigate('Archive')}
           />
         </VStack>
