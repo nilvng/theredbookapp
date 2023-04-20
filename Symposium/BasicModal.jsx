@@ -47,6 +47,27 @@ const BasicModal = (props) => {
                                             </Card>
                                         ))}
                                     </HStack>
+                                    <Text variant="titleMedium">Speakers</Text>
+                                    <View style={{ width: "100%" }} >
+                                        <FlatList horizontal={true}
+                                            data={props.space.speakers}
+                                            keyExtractor={item => item.id}
+                                            renderItem={({ index, item }) => (
+                                                <Card
+                                                    id={index}
+                                                    mode='contained'
+                                                    style={{ marginHorizontal: 4 }}
+                                                    onStartShouldSetResponder={() => true}>
+                                                    <Card.Cover
+                                                        source={item.avatar}
+                                                        resizeMode={`contain`}
+                                                        style={{ height: 50 }} />
+                                                    <Card.Content>
+                                                        <Text>{item.name}</Text>
+                                                    </Card.Content>
+                                                </Card>
+                                            )} />
+                                    </View>
                                 </Stack>
                                 <Flex style={{ width: "100%", position: 'absolute', bottom: 0, marginBottom: 16 }}
                                     direction='row' justify='evenly' fill wrap="nowrap" spacing={18}>
