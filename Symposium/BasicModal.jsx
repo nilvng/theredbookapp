@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
-import { Button, Flex, Stack, TextInput, IconButton, Spacer, HStack } from "@react-native-material/core";
+import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Flex, Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
+import { Button as Rbutton } from "@react-native-material/core";
+
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, Button } from 'react-native-paper';
 const BasicModal = (props) => {
     const topicList = ["Entertainment", "Politics", "IT", "Business"]
     const [modalVisible, setModalVisible] = useState(false);
@@ -37,14 +39,9 @@ const BasicModal = (props) => {
                                     <Text variant="titleMedium">Topics</Text>
                                     <HStack spacing={2}>
                                         {topicList.map((topic, index) => (
-                                            <Card id={index}
-                                                mode='outlined'
-                                                style={{ alignSelf: 'baseline', padding: 0 }}
-                                                contentStyle={{ padding: 0 }}>
-                                                <Card.Content style={{ padding: 0 }}>
-                                                    <Text>{topic}</Text>
-                                                </Card.Content>
-                                            </Card>
+                                            <Button
+                                                key={index}
+                                                mode='contained-tonal'>{topic}</Button>
                                         ))}
                                     </HStack>
                                     <Text variant="titleMedium">Speakers</Text>
@@ -69,27 +66,31 @@ const BasicModal = (props) => {
                                             )} />
                                     </View>
                                 </Stack>
-                                <Flex style={{ width: "100%", position: 'absolute', bottom: 0, marginBottom: 16 }}
-                                    direction='row' justify='evenly' fill wrap="nowrap" spacing={18}>
-                                    <Button
-                                        style={[styles.buttonClose]}
-                                        onPress={() => setModalVisible(!modalVisible)}
-                                        variant='text'
-                                        title="Submit"
-                                        color='black'
-                                    />
-                                    <IconButton
-                                        onPress={() => setModalVisible(!modalVisible)}
-                                        icon={props => <Icon name='clock' {...props} />}
-                                    />
-                                </Flex>
                             </View>
                         </TouchableWithoutFeedback>
+                        <HStack style={{
+                            width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 4,
+                            backgroundColor: '#FFF4F1', elevation: 5, shadowOffset: { width: 0, height: -4 },
+                            paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
+                        }}
+                            direction='row' justify='around' fill wrap="nowrap" spacing={18}>
+                            <Button
+                                style={{ flexGrow: 1 }}
+                                onPress={() => setModalVisible(!modalVisible)}
+                                mode='contained'
+                                dark={true}
+                            >Submit
+                            </Button>
+                            <IconButton
+                                onPress={() => setModalVisible(!modalVisible)}
+                                icon={props => <Icon name='clock' {...props} />}
+                            />
+                        </HStack>
                     </KeyboardAvoidingView>
                 </View>
             </Modal >
 
-            <Button
+            <Rbutton
                 style={[styles.button, styles.buttonOpen]}
                 onPress={() => setModalVisible(!modalVisible)}
                 variant='text'
@@ -134,8 +135,6 @@ const styles = StyleSheet.create({
         width: '50%',
     },
     buttonClose: {
-        backgroundColor: '#BD827D',
-        padding: 8,
         flexGrow: 1,
     },
     textStyle: {
