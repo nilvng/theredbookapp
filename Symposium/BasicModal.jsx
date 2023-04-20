@@ -37,13 +37,19 @@ const BasicModal = (props) => {
                                         keyboardType='default'
                                     />
                                     <Text variant="titleMedium">Topics</Text>
-                                    <HStack spacing={2}>
-                                        {topicList.map((topic, index) => (
+                                    <FlatList horizontal={true}
+                                        data={topicList}
+                                        style={{ flexGrow: 0 }}
+                                        keyExtractor={(index) => index}
+                                        renderItem={({ index, item }) => (
                                             <Button
+                                                style={{ marginHorizontal: 2 }}
                                                 key={index}
-                                                mode='contained-tonal'>{topic}</Button>
-                                        ))}
-                                    </HStack>
+                                                mode='contained-tonal'
+                                                onStartShouldSetResponder={() => true}>
+                                                {item}
+                                            </Button>
+                                        )} />
                                     <Text variant="titleMedium">Speakers</Text>
                                     <View style={{ width: "100%" }} >
                                         <FlatList horizontal={true}
