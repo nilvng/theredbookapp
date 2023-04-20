@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import { Flex, Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
+import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
 import { Button as Rbutton } from "@react-native-material/core";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -26,10 +26,12 @@ const BasicModal = (props) => {
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         style={{ flex: 1 }}
                     >
-                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                            <View style={styles.modalView}>
+                        <View style={styles.modalView}>
+                            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                                 <Text style={styles.modalTitle}>Have your say!</Text>
-                                <Stack fill spacing={8} style={{ width: "100%", marginTop: 16 }}>
+                            </TouchableWithoutFeedback>
+                            <Stack fill spacing={8} style={{ width: "100%", marginTop: 16 }}>
+                                <ScrollView style={{ flex: 1 }}>
                                     <TextInput
                                         style={{ width: "100%" }}
                                         variant='outlined'
@@ -71,9 +73,9 @@ const BasicModal = (props) => {
                                                 </Card>
                                             )} />
                                     </View>
-                                </Stack>
-                            </View>
-                        </TouchableWithoutFeedback>
+                                </ScrollView>
+                            </Stack>
+                        </View>
                         <HStack style={styles.buttonContainer}
                             direction='row' justify='around' fill wrap="nowrap" spacing={8}>
                             <Button
@@ -145,13 +147,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-    },
     modalTitle: {
         fontSize: 20,
-        marginVertical: 12,
+        marginVertical: 8,
         textAlign: 'center',
     },
     buttonContainer: {
