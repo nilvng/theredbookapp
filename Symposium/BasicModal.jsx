@@ -54,7 +54,7 @@ const BasicModal = (props) => {
                                             keyExtractor={item => item.id}
                                             renderItem={({ index, item }) => (
                                                 <Card
-                                                    id={index}
+                                                    key={index}
                                                     mode='contained'
                                                     style={{ marginHorizontal: 4 }}
                                                     onStartShouldSetResponder={() => true}>
