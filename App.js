@@ -38,7 +38,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <IncomingCall space={testData}></IncomingCall>
-      <BasicModal />
+      <BasicModal space={testData} />
     </View>
   );
 }
