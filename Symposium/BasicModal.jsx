@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Button, Flex, Stack, TextInput, IconButton, Spacer } from "@react-native-material/core";
+import { Modal, StyleSheet, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
+import { Button, Flex, Stack, TextInput, IconButton, Spacer, HStack } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
-const BasicModal = () => {
+import { Card, Text } from 'react-native-paper';
+const BasicModal = (props) => {
+    const topicList = ["Entertainment", "Politics", "IT", "Business"]
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
@@ -33,6 +34,19 @@ const BasicModal = () => {
                                         label='Enter your subject...'
                                         keyboardType='default'
                                     />
+                                    <Text variant="titleMedium">Topics</Text>
+                                    <HStack spacing={2}>
+                                        {topicList.map((topic, index) => (
+                                            <Card id={index}
+                                                mode='outlined'
+                                                style={{ alignSelf: 'baseline', padding: 0 }}
+                                                contentStyle={{ padding: 0 }}>
+                                                <Card.Content style={{ padding: 0 }}>
+                                                    <Text>{topic}</Text>
+                                                </Card.Content>
+                                            </Card>
+                                        ))}
+                                    </HStack>
                                 </Stack>
                                 <Flex style={{ width: "100%", position: 'absolute', bottom: 0, marginBottom: 16 }}
                                     direction='row' justify='evenly' fill wrap="nowrap" spacing={18}>
