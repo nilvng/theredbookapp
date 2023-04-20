@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import IncomingCall from './views/incomingCall';
 import BasicModal from './Symposium/BasicModal';
 const testData = {
@@ -36,10 +36,10 @@ const testData = {
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <IncomingCall space={testData}></IncomingCall>
+    <SafeAreaView style={styles.container}>
+      <IncomingCall space={testData} />
       <BasicModal space={testData} />
-    </View>
+    </SafeAreaView>
   );
 }
 
