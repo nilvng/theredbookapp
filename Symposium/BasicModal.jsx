@@ -74,19 +74,13 @@ const BasicModal = (props) => {
                                 </Stack>
                             </View>
                         </TouchableWithoutFeedback>
-                        <HStack style={{
-                            width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 4,
-                            backgroundColor: '#FFF4F1', elevation: 5, shadowOffset: { width: 0, height: -4 },
-                            paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
-                        }}
-                            direction='row' justify='around' fill wrap="nowrap" spacing={18}>
+                        <HStack style={styles.buttonContainer}
+                            direction='row' justify='around' fill wrap="nowrap" spacing={8}>
                             <Button
-                                style={{ flexGrow: 1 }}
+                                style={styles.buttonClose}
                                 onPress={() => setModalVisible(!modalVisible)}
                                 mode='contained'
-                                dark={true}
-                            >Submit
-                            </Button>
+                            >Submit</Button>
                             <IconButton
                                 onPress={() => setModalVisible(!modalVisible)}
                                 icon={props => <Icon name='clock' {...props} />}
@@ -142,6 +136,9 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         flexGrow: 1,
+        paddingVertical: 4,
+        flex: 2
+
     },
     textStyle: {
         color: 'white',
@@ -157,6 +154,11 @@ const styles = StyleSheet.create({
         marginVertical: 12,
         textAlign: 'center',
     },
+    buttonContainer: {
+        width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 12,
+        backgroundColor: '#FFF4F1', elevation: 5, shadowOffset: { width: 0, height: -4 },
+        paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
+    }
 });
 
 export default BasicModal;
