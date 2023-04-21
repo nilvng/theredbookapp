@@ -85,8 +85,9 @@ const BasicModal = (props) => {
                                         renderItem={({ index, item }) => (
                                             <Card
                                                 key={index}
-                                                mode={selectedSpeakers.includes(index) ? 'outlined' : 'contained'}
+                                                mode={'contained'}
                                                 style={{ marginHorizontal: 4 }}
+                                                contentStyle={{ backgroundColor: selectedSpeakers.includes(index) ? '#c0a3e6' : '#e1d8ed' }}
                                                 onPress={() => handleOnPressSpeaker(index)}>
                                                 <Card.Cover
                                                     source={item.avatar}
