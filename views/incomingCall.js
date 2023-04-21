@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { VStack, Box, Divider, Avatar, HStack, Button, Spacer } from "@react-native-material/core";
 
-const testData = {
+export const testData = {
   name: 'Important Meeting',
   startDate: '2021-04-01T12:00:00Z',
   speakers: [
@@ -59,6 +59,9 @@ export default function IncomingCall( { navigation } ) {
           <Button style={styles.button} title="Ignore" color="#f44336" />
           <Button style={styles.button} title="Archive" color="purple" 
           onPress={() => navigation.navigate('Archive')}
+          />
+          <Button style={styles.button} title="Create" color="green" 
+          onPress={() => navigation.navigate('Create')}
           />
         </VStack>
       </VStack>
