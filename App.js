@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Archive from './views/archive';
-import IncomingCall from './views/incomingCall';
+import IncomingCall, { testData } from './views/incomingCall';
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
+import CreateModal from './Symposium/CreateModal';
 
 const Stack = createStackNavigator();
 
@@ -14,13 +15,18 @@ export default function App() {
         headerShown: false
       }}>
         <Stack.Screen
-        name = "Call"
-        component={IncomingCall}
+          name="Call"
+          component={IncomingCall}
         />
         <Stack.Screen
-        name = "Archive"
-        component={Archive}
+          name="Archive"
+          component={Archive}
         />
+        <Stack.Screen
+          name='Create'
+          options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
+          {props => <CreateModal {...props} space={testData} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
