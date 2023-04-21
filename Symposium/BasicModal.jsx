@@ -8,6 +8,7 @@ import { Card, Text, Button } from 'react-native-paper';
 const BasicModal = (props) => {
     const topicList = ["Entertainment", "Politics", "IT", "Business"]
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
+    const [subject, setSubject] = useState("");
     const handleOnPress = (index) => {
         var updatedSpeakers = [...selectedSpeakers];
         if (selectedSpeakers.includes(index)) {
@@ -46,6 +47,8 @@ const BasicModal = (props) => {
                                     style={{ width: "100%", marginTop: 4 }}
                                     variant='outlined'
                                     label='Enter your subject...'
+                                    onChangeText={text => setSubject(text)}
+                                    value={subject}
                                 />
                                 <Text variant="titleMedium">Topics</Text>
                                 <FlatList horizontal={true}
