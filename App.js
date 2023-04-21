@@ -4,7 +4,7 @@ import Archive from './views/archive';
 import IncomingCall, { testData } from './views/incomingCall';
 import { NavigationContainer } from "@react-navigation/native";
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
-import CreateModal from './Symposium/CreateModal';
+import CreateModal from './Symposium/Views/CreateModal';
 
 const Stack = createStackNavigator();
 
