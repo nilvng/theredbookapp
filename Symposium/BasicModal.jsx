@@ -7,6 +7,17 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 const BasicModal = (props) => {
     const topicList = ["Entertainment", "Politics", "IT", "Business"]
+    const [selectedSpeakers, setSelectedSpeaker] = useState([]);
+    const handleOnPress = (index) => {
+        var updatedSpeakers = [...selectedSpeakers];
+        if (selectedSpeakers.includes(index)) {
+            updatedSpeakers = selectedSpeakers.filter((item) => item !== index)
+        } else {
+            updatedSpeakers.push(index)
+        }
+        setSelectedSpeaker(updatedSpeakers)
+    }
+
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
@@ -30,49 +41,49 @@ const BasicModal = (props) => {
                             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                                 <Text style={styles.modalTitle}>Have your say!</Text>
                             </TouchableWithoutFeedback>
-                                <ScrollView style={{ flex: 1 }}>
-                                    <TextInput
+                            <ScrollView style={{ flex: 1 }}>
+                                <TextInput
                                     style={{ width: "100%", marginTop: 4 }}
-                                        variant='outlined'
-                                        label='Enter your subject...'
-                                        keyboardType='default'
-                                    />
-                                    <Text variant="titleMedium">Topics</Text>
+                                    variant='outlined'
+                                    label='Enter your subject...'
+                                />
+                                <Text variant="titleMedium">Topics</Text>
+                                <FlatList horizontal={true}
+                                    data={topicList}
+                                    style={{ flexGrow: 0 }}
+                                    keyExtractor={(index) => index}
+                                    renderItem={({ index, item }) => (
+                                        <Button
+                                            style={{ marginHorizontal: 2 }}
+                                            key={index}
+                                            mode='contained-tonal'
+                                            onStartShouldSetResponder={() => true}>
+                                            {item}
+                                        </Button>
+                                    )} />
+                                <Text variant="titleMedium">Speakers</Text>
+                                <View style={{ width: "100%" }} >
                                     <FlatList horizontal={true}
-                                        data={topicList}
-                                        style={{ flexGrow: 0 }}
-                                        keyExtractor={(index) => index}
+                                        data={props.space.speakers}
+                                        keyExtractor={item => item.id}
+                                        extraData={selectedSpeakers}
                                         renderItem={({ index, item }) => (
-                                            <Button
-                                                style={{ marginHorizontal: 2 }}
+                                            <Card
                                                 key={index}
-                                                mode='contained-tonal'
-                                                onStartShouldSetResponder={() => true}>
-                                                {item}
-                                            </Button>
+                                                mode={selectedSpeakers.includes(index) ? 'outlined' : 'contained'}
+                                                style={{ marginHorizontal: 4 }}
+                                                onPress={() => handleOnPress(index)}>
+                                                <Card.Cover
+                                                    source={item.avatar}
+                                                    resizeMode={`contain`}
+                                                    style={{ height: 50 }} />
+                                                <Card.Content>
+                                                    <Text>{item.name}</Text>
+                                                </Card.Content>
+                                            </Card>
                                         )} />
-                                    <Text variant="titleMedium">Speakers</Text>
-                                    <View style={{ width: "100%" }} >
-                                        <FlatList horizontal={true}
-                                            data={props.space.speakers}
-                                            keyExtractor={item => item.id}
-                                            renderItem={({ index, item }) => (
-                                                <Card
-                                                    key={index}
-                                                    mode='contained'
-                                                    style={{ marginHorizontal: 4 }}
-                                                    onStartShouldSetResponder={() => true}>
-                                                    <Card.Cover
-                                                        source={item.avatar}
-                                                        resizeMode={`contain`}
-                                                        style={{ height: 50 }} />
-                                                    <Card.Content>
-                                                        <Text>{item.name}</Text>
-                                                    </Card.Content>
-                                                </Card>
-                                            )} />
-                                    </View>
-                                </ScrollView>
+                                </View>
+                            </ScrollView>
                         </View>
                         <HStack style={styles.buttonContainer}
                             direction='row' justify='around' fill wrap="nowrap" spacing={8}>
