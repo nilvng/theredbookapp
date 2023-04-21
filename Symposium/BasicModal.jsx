@@ -30,10 +30,9 @@ const BasicModal = (props) => {
                             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                                 <Text style={styles.modalTitle}>Have your say!</Text>
                             </TouchableWithoutFeedback>
-                            <Stack fill spacing={8} style={{ width: "100%", marginTop: 16 }}>
                                 <ScrollView style={{ flex: 1 }}>
                                     <TextInput
-                                        style={{ width: "100%" }}
+                                    style={{ width: "100%", marginTop: 4 }}
                                         variant='outlined'
                                         label='Enter your subject...'
                                         keyboardType='default'
@@ -74,7 +73,6 @@ const BasicModal = (props) => {
                                             )} />
                                     </View>
                                 </ScrollView>
-                            </Stack>
                         </View>
                         <HStack style={styles.buttonContainer}
                             direction='row' justify='around' fill wrap="nowrap" spacing={8}>
