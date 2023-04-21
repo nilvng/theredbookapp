@@ -8,15 +8,25 @@ import { Card, Text, Button } from 'react-native-paper';
 const BasicModal = (props) => {
     const topicList = ["Entertainment", "Politics", "IT", "Business"]
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
+    const [selectedTopics, setSelectedTopics] = useState([]);
     const [subject, setSubject] = useState("");
-    const handleOnPress = (index) => {
-        var updatedSpeakers = [...selectedSpeakers];
+    const handleOnPressSpeaker = (index) => {
+        var updated = [...selectedSpeakers];
         if (selectedSpeakers.includes(index)) {
-            updatedSpeakers = selectedSpeakers.filter((item) => item !== index)
+            updated = selectedSpeakers.filter((item) => item !== index)
         } else {
-            updatedSpeakers.push(index)
+            updated.push(index)
         }
-        setSelectedSpeaker(updatedSpeakers)
+        setSelectedSpeaker(updated)
+    }
+    const handleOnPressTopic = (index) => {
+        var updated = [...selectedTopics];
+        if (selectedTopics.includes(index)) {
+            updated = selectedTopics.filter((item) => item !== index)
+        } else {
+            updated.push(index)
+        }
+        setSelectedTopics(updated)
     }
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -60,6 +70,8 @@ const BasicModal = (props) => {
                                             style={{ marginHorizontal: 2 }}
                                             key={index}
                                             mode='contained-tonal'
+                                            buttonColor={selectedTopics.includes(index) ? '#c0a3e6' : '#e1d8ed'}
+                                            onPress={() => handleOnPressTopic(index)}
                                             onStartShouldSetResponder={() => true}>
                                             {item}
                                         </Button>
@@ -75,7 +87,7 @@ const BasicModal = (props) => {
                                                 key={index}
                                                 mode={selectedSpeakers.includes(index) ? 'outlined' : 'contained'}
                                                 style={{ marginHorizontal: 4 }}
-                                                onPress={() => handleOnPress(index)}>
+                                                onPress={() => handleOnPressSpeaker(index)}>
                                                 <Card.Cover
                                                     source={item.avatar}
                                                     resizeMode={`contain`}
