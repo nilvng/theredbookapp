@@ -1,31 +1,42 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SectionList, Image, Pressable, Modal } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import { VStack, Button, HStack } from "@react-native-material/core";
+import Card from '../components/card';
 
 const dummyPodcasts = [
-    'Podcast #1 - Welcome to our podcast!',
-    'Podcast #2 - Heated discussion with the hosts',
-    'Podcast #3 - Viewer Q&A',
-    'Dummy Podcast 1',
-    'Dummy Podcast 2',
-    'Dummy Podcast 3',
-    'Dummy Podcast 4',
-    'Dummy Podcast 5',
-    'Dummy Podcast 6',
-    'Dummy Podcast 7',
-    'Dummy Podcast 8',
-    'Dummy Podcast 9',
-    'Dummy Podcast 10',
+    { title: 'Podcast #1', description: 'Welcome to our podcast!' },
+    { title: 'Podcast #2', description: 'Heated discussion with the hosts' },
+    { title: 'Podcast #3', description: 'Viewer Q&A' },
+    { title: 'Dummy Podcast 1', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 2', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 3', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 4', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 5', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 6', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 7', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 8', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 9', description: 'Dummy podcast' },
+    { title: 'Dummy Podcast 10', description: 'Dummy podcast' }
 ]
 
-const dummyDiscusions = [
-    'Ex-Amazon workers, share you experiences!',
-    'What can be done about crunch time in the game-dev industry?',
+const dummyDiscussions = [
+    { title: 'Ex-Amazon workers, share you experiences!', description: 'Discussion on prior experiences of amazon warehouse workers' },
+    { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry' },
 ]
+
+
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
+    const [pressed, setPressed] = useState(false);
     const [currentData, setData] = useState("")
+
+    const renderHeader = (header) => {
+        return (
+            <Text style={styles.sectionHeader}>{header}</Text>
+
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -40,7 +51,8 @@ export default function Archive({ navigation }) {
 
                 <View style={styles.modalView}>
                     <View style={styles.container}>
-                        <Text style={styles.modalTitle}>{currentData}</Text>
+                        <Text style={styles.modalTitle}>{currentData.title}</Text>
+                        <Text>{currentData.description}</Text>
                     </View>
 
                     <View>
@@ -48,36 +60,24 @@ export default function Archive({ navigation }) {
                             onPress={() => setModalVisible(!modalVisible)} />
                     </View>
                 </View>
-
             </Modal>
 
             <HStack>
                 <Text style={styles.title}>Archive</Text>
             </HStack>
 
-            <SectionList
-                sections={[
-                    { title: 'Podcasts', data: dummyPodcasts },
-                    { title: 'Discussions', data: dummyDiscusions },
-                    { title: 'Empty test', data: '' }
-                ]}
-                renderItem={({ item }) =>
-                    <Pressable
-                        onPress={() => {
-                            setModalVisible(!modalVisible);
-                            setData(item);
-                        }}
-                        style={({ pressed }) => [{
-                            backgroundColor: pressed ? 'grey' : 'transparent',
-                        },
-                        ]}>
-                        <Text style={styles.item}>{item}</Text>
-                    </Pressable>}
-                renderSectionHeader={({ section }) => (
-                    <Text style={styles.sectionHeader}>{section.title}</Text>
-                )}
-                keyExtractor={item => `basicListEntry-${item}`}
+            <FlatList
+                style={{ width: '95%' }}
+                data={dummyPodcasts}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
+                        <Card>
+                            <Text> {item.title}</Text>
+                        </Card>
+                    </TouchableOpacity>)}
+                ListHeaderComponent={renderHeader('Podcasts')}
             />
+
 
             <HStack>
                 <Button style={[styles.button]} title="Go back" color="purple"
