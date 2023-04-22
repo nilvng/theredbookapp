@@ -4,19 +4,19 @@ import { VStack, Button, HStack } from "@react-native-material/core";
 import Card from '../components/card';
 
 const dummyPodcasts = [
-    { title: 'Podcast #1', description: 'Welcome to our podcast!' },
-    { title: 'Podcast #2', description: 'Heated discussion with the hosts' },
-    { title: 'Podcast #3', description: 'Viewer Q&A' },
-    { title: 'Dummy Podcast 1', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 2', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 3', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 4', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 5', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 6', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 7', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 8', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 9', description: 'Dummy podcast' },
-    { title: 'Dummy Podcast 10', description: 'Dummy podcast' }
+    { title: 'Podcast #1', description: 'Welcome to our podcast!', host: 'Nick' },
+    { title: 'Podcast #2', description: 'Heated discussion with the hosts', host: 'Nick' },
+    { title: 'Podcast #3', description: 'Viewer Q&A', host: 'Nick' },
+    { title: 'Dummy Podcast 1', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 2', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 3', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 4', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 5', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 6', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 7', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 8', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 9', description: 'Dummy podcast', host: 'Nick' },
+    { title: 'Dummy Podcast 10', description: 'Dummy podcast', host: 'Nick' }
 ]
 
 const dummyDiscussions = [
@@ -31,10 +31,16 @@ export default function Archive({ navigation }) {
     const [pressed, setPressed] = useState(false);
     const [currentData, setData] = useState("")
 
+    const Separator = () => {
+        return <View style={styles.separator} />;
+    };
+
     const renderHeader = (header) => {
         return (
-            <Text style={styles.sectionHeader}>{header}</Text>
-
+            <View>
+                <Text style={styles.sectionHeader}>{header}</Text>
+                <Separator />
+            </View>
         )
     }
 
@@ -72,9 +78,15 @@ export default function Archive({ navigation }) {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
                         <Card>
-                            <Text> {item.title}</Text>
+                            <View style={styles.cardTitleContainer}>
+                                <Text style={styles.cardTitle}> {item.title}</Text>
+                            </View>
+                            <View style={styles.cardHostContainer}>
+                                <Text style={styles.cardHost}> {item.host}</Text>
+                            </View>
                         </Card>
                     </TouchableOpacity>)}
+                ItemSeparatorComponent={<Separator />}
                 ListHeaderComponent={renderHeader('Podcasts')}
             />
 
@@ -122,13 +134,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         color: 'white'
     },
-    // Items in the list view
-    item: {
-        backgroundColor: 'transparent',
-        fontSize: 20,
-        color: 'white',
-        padding: 5,
-    },
     modalView: {
         flex: 1,
         paddingTop: '60%',
@@ -139,5 +144,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center',
+    },
+    separator: {
+        height: 10,
+        width: '100%',
+    },
+    cardTitleContainer: {
+        flex: 1,
+    },
+    cardTitle: {
+        fontSize: 15,
+        paddingLeft: 10,
+    },
+    cardHostContainer: {
+        flexGrow: 1,
+        borderRadius: 10,
+        height: '100%',
+        backgroundColor: '#F3EED9',
+    },
+    cardHost: {
+        paddingLeft: 10,
     },
 });
