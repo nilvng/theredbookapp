@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: '#FFF4F1',
+        height: 200,
     },
     cardContent: {
-        paddingTop: '10%',
-        paddingBottom: '10%',
+        flex: 1,
     }
 });

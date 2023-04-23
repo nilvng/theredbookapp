@@ -3,6 +3,10 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from
 import { VStack, Button, HStack } from "@react-native-material/core";
 import Card from '../components/card';
 
+const symposiums = [
+    {category: 'podcasts', data: dummyPodcasts},
+]
+
 const dummyPodcasts = [
     { title: 'Podcast #1', description: 'Welcome to our podcast!', host: 'Nick' },
     { title: 'Podcast #2', description: 'Heated discussion with the hosts', host: 'Nick' },
@@ -150,19 +154,20 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     cardTitleContainer: {
-        flex: 1,
+        flexGrow: 1,
     },
     cardTitle: {
         fontSize: 15,
         paddingLeft: 10,
+        alignSelf: 'baseline',
     },
     cardHostContainer: {
-        flexGrow: 1,
+        height: '30%',
         borderRadius: 10,
-        height: '100%',
         backgroundColor: '#F3EED9',
     },
     cardHost: {
-        paddingLeft: 10,
+        paddingHorizontal: 10,
+
     },
 });
