@@ -5,11 +5,15 @@ import { Button as Rbutton } from "@react-native-material/core";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
+import { insert } from '../Models/symposium-db';
+
+const topicList = ["Entertainment", "Politics", "IT", "Business"]
+
 const CreateModal = (props) => {
-    const topicList = ["Entertainment", "Politics", "IT", "Business"]
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
     const [selectedTopics, setSelectedTopics] = useState([]);
     const [subject, setSubject] = useState("");
+
     const handleOnPressSpeaker = (index) => {
         var updated = [...selectedSpeakers];
         if (selectedSpeakers.includes(index)) {
@@ -28,116 +32,97 @@ const CreateModal = (props) => {
         }
         setSelectedTopics(updated)
     }
+    const handleOnPressSubmit = async () => {
+        const item = {
+            title: subject,
+            topic: "test",
+            host: "selectedSpeakers",
+            startDate: Date().toString(),
+        }
+        if (subject != "") {
+            await insert(item)
+        }
+        routeBack()
+    }
+    const routeBack = () => {
+        props.navigation.goBack();
+    }
 
-    const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View style={styles.centeredView}>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onBackdropPress={() => setModalVisible(false)}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible)
-                }}
-            >
-                <View
-                    style={styles.modalContainer}>
-                    <KeyboardAvoidingView
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                        style={{ flex: 1 }}
-                    >
-                        <View style={styles.modalView}>
-                            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                                <Text style={styles.modalTitle}>Have your say!</Text>
-                            </TouchableWithoutFeedback>
-                            <ScrollView style={{ flex: 1 }}>
-                                <TextInput
-                                    style={{ width: "100%", marginTop: 4 }}
-                                    variant='outlined'
-                                    label='Enter your subject...'
-                                    onChangeText={text => setSubject(text)}
-                                    value={subject}
-                                />
-                                <Text variant="titleMedium">Topics</Text>
-                                <FlatList horizontal={true}
-                                    data={topicList}
-                                    style={{ flexGrow: 0 }}
-                                    keyExtractor={(index) => index}
-                                    renderItem={({ index, item }) => (
-                                        <Button
-                                            style={{ marginHorizontal: 2 }}
-                                            key={index}
-                                            mode='contained-tonal'
-                                            buttonColor={selectedTopics.includes(index) ? '#c0a3e6' : '#e1d8ed'}
-                                            onPress={() => handleOnPressTopic(index)}
-                                            onStartShouldSetResponder={() => true}>
-                                            {item}
-                                        </Button>
-                                    )} />
-                                <Text variant="titleMedium">Speakers</Text>
-                                <View style={{ width: "100%" }} >
-                                    <FlatList horizontal={true}
-                                        data={props.space.speakers}
-                                        keyExtractor={item => item.id}
-                                        extraData={selectedSpeakers}
-                                        renderItem={({ index, item }) => (
-                                            <Card
-                                                key={index}
-                                                mode={'contained'}
-                                                style={{ marginHorizontal: 4 }}
-                                                contentStyle={{ backgroundColor: selectedSpeakers.includes(index) ? '#c0a3e6' : '#e1d8ed' }}
-                                                onPress={() => handleOnPressSpeaker(index)}>
-                                                <Card.Cover
-                                                    source={item.avatar}
-                                                    resizeMode={`contain`}
-                                                    style={{ height: 50 }} />
-                                                <Card.Content>
-                                                    <Text>{item.name}</Text>
-                                                </Card.Content>
-                                            </Card>
-                                        )} />
-                                </View>
-                            </ScrollView>
-                        </View>
-                        <HStack style={styles.buttonContainer}
-                            direction='row' justify='around' fill wrap="nowrap" spacing={8}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+        >
+            <View style={styles.modalView}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <Text style={styles.modalTitle}>Have your say!</Text>
+                </TouchableWithoutFeedback>
+                <ScrollView style={{ flex: 1 }}>
+                    <TextInput
+                        style={{ width: "100%", marginTop: 4 }}
+                        variant='outlined'
+                        label='Enter your subject...'
+                        onChangeText={text => setSubject(text)}
+                        value={subject}
+                    />
+                    <Text variant="titleMedium">Topics</Text>
+                    <FlatList horizontal={true}
+                        data={topicList}
+                        style={{ flexGrow: 0 }}
+                        keyExtractor={(index) => index}
+                        renderItem={({ index, item }) => (
                             <Button
-                                style={styles.buttonClose}
-                                onPress={() => setModalVisible(!modalVisible)}
-                                mode='contained'
-                            >Submit</Button>
-                            <IconButton
-                                onPress={() => setModalVisible(!modalVisible)}
-                                icon={props => <Icon name='clock' {...props} />}
-                            />
-                        </HStack>
-                    </KeyboardAvoidingView>
-                </View>
-            </Modal >
-
-            <Rbutton
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setModalVisible(!modalVisible)}
-                variant='text'
-                title="Host symposium"
-            />
-        </View >
+                                style={{ marginHorizontal: 2 }}
+                                key={index}
+                                mode='contained-tonal'
+                                buttonColor={selectedTopics.includes(index) ? '#c0a3e6' : '#e1d8ed'}
+                                onPress={() => handleOnPressTopic(index)}
+                                onStartShouldSetResponder={() => true}>
+                                {item}
+                            </Button>
+                        )} />
+                    <Text variant="titleMedium">Speakers</Text>
+                    <View style={{ width: "100%" }} >
+                        <FlatList horizontal={true}
+                            data={props.space.speakers}
+                            keyExtractor={item => item.id}
+                            extraData={selectedSpeakers}
+                            renderItem={({ index, item }) => (
+                                <Card
+                                    key={index}
+                                    mode={'contained'}
+                                    style={{ marginHorizontal: 4 }}
+                                    contentStyle={{ backgroundColor: selectedSpeakers.includes(index) ? '#c0a3e6' : '#e1d8ed' }}
+                                    onPress={() => handleOnPressSpeaker(index)}>
+                                    <Card.Cover
+                                        source={item.avatar}
+                                        resizeMode={`contain`}
+                                        style={{ height: 50 }} />
+                                    <Card.Content>
+                                        <Text>{item.name}</Text>
+                                    </Card.Content>
+                                </Card>
+                            )} />
+                    </View>
+                </ScrollView>
+            </View>
+            <HStack style={styles.buttonContainer}
+                direction='row' justify='around' fill wrap="nowrap" spacing={8}>
+                <Button
+                    style={styles.buttonClose}
+                    onPress={() => handleOnPressSubmit()}
+                    mode='contained'
+                >Submit</Button>
+                <IconButton
+                    onPress={() => routeBack()}
+                    icon={props => <Icon name='clock' {...props} />}
+                />
+            </HStack>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.05)',
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
-    },
     modalView: {
         height: '50%',
         marginTop: 'auto',
