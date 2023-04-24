@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import ChatBox from './chatBox';
+import Chat from './views/Chat';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ChatBox />
+      <Chat />
     </View>
   );
 }
