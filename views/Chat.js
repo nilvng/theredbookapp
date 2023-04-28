@@ -7,10 +7,6 @@ const messages = [
   { id: 3, content: 'How are you?', upvote: 5, downvote: 0 },
 ];
 
-const Chat = () => {
-  const renderItem = ({ item }) => (
-    <Message content={item.content} isMyMessage={item.isMyMessage} />
-  );
 
   return (
     <View style={styles.container}>
@@ -21,7 +17,7 @@ const Chat = () => {
       />
     </View>
   );
-};
+
 
 const styles = StyleSheet.create({
   container: {
