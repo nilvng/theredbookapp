@@ -12,15 +12,6 @@ const MessageBubble = ({ children, isMyMessage }) => {
       marginTop: 4,
       marginBottom: 4,
     },
-    containerRight: {
-      maxWidth: '80%',
-      borderRadius: 12,
-      backgroundColor: '#0084ff',
-      padding: 10,
-      marginRight: 8,
-      marginTop: 4,
-      marginBottom: 4,
-    },
   });
 
   const containerStyle = isMyMessage ? styles.containerRight : styles.containerLeft;

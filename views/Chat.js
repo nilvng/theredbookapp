@@ -10,7 +10,15 @@ const messages = [
 
 const Chat = () => {
   const renderItem = ({ item }) => (
-    <Message content={item.content} isMyMessage={item.isMyMessage} />
+    <View style={styles.messageContainer}>
+      <View style={styles.message}>
+        <Message content={item.content} />
+      </View>
+      <View style={styles.voteContainer}>
+        <Text style={styles.voteText}>↑ {item.upvote}</Text>
+        <Text style={styles.voteText}>↓ {item.downvote}</Text>
+      </View>
+    </View>
   );
 
   return (
@@ -28,6 +36,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  messageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  message: {
+    width: '70%',
+  },
+  voteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '10%',
+  },
+  voteText: {
+    fontSize: 14,
+    color: '#999',
+    marginHorizontal: 5,
   },
 });
 
