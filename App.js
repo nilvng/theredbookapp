@@ -1,12 +1,18 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import Chat from './views/Chat';
+import InputBox from './components/InputBox';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <Chat />
-    </View>
+      <InputBox />
+    </KeyboardAvoidingView>
   );
 }
 
