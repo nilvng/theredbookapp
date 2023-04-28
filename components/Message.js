@@ -1,45 +1,36 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import MessageBubble from './MessageBb';
 
 const Message = ({ content, isMyMessage }) => {
+  const styles = StyleSheet.create({
+    iconContainer: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 8,
+    },
+    messageContainer: {
+      flexDirection: isMyMessage ? 'row-reverse' : 'row',
+      alignItems: 'center',
+      marginVertical: 5,
+      alignSelf: isMyMessage ? 'flex-end' : 'flex-start'
+    },
+  });
+
   return (
-    <View style={isMyMessage ? styles.myMessageContainer : styles.theirMessageContainer}>
-      <Text style={isMyMessage ? styles.myMessageText : styles.theirMessageText}>{content}</Text>
+    <View style={styles.messageContainer}>
+      <View style={[styles.iconContainer, { backgroundColor: isMyMessage ? '#0084ff' : '#eee' }]}>
+        <MaterialCommunityIcons name="account" size={24} color={isMyMessage ? '#fff' : '#000'} />
+      </View>
+      <MessageBubble isMyMessage={isMyMessage}>
+        <Text style={{ color: isMyMessage ? '#fff' : '#000' }}>{content}</Text>
+      </MessageBubble>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  myMessageContainer: {
-    backgroundColor: '#0084ff',
-    alignSelf: 'flex-end',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 16,
-    marginTop: 4,
-    marginBottom: 4,
-    marginRight: 12,
-    marginLeft: 80,
-  },
-  theirMessageContainer: {
-    backgroundColor: '#f1f0f0',
-    alignSelf: 'flex-start',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 16,
-    marginTop: 4,
-    marginBottom: 4,
-    marginRight: 80,
-    marginLeft: 12,
-  },
-  myMessageText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  theirMessageText: {
-    color: '#000',
-    fontSize: 16,
-  },
-});
 
 export default Message;
