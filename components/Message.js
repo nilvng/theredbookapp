@@ -1,48 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 const Message = ({ content, isMyMessage }) => {
-  const containerStyle = [
-    styles.container,
-    isMyMessage ? styles.myMessage : styles.otherMessage,
-  ];
-
-  const textStyle = [styles.text, isMyMessage ? styles.myText : styles.otherText];
-
   return (
-    <View style={containerStyle}>
-      <Text style={textStyle}>{content}</Text>
+    <View style={isMyMessage ? styles.myMessageContainer : styles.theirMessageContainer}>
+      <Text style={isMyMessage ? styles.myMessageText : styles.theirMessageText}>{content}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 5,
-    marginHorizontal: 10,
+  myMessageContainer: {
+    backgroundColor: '#0084ff',
+    alignSelf: 'flex-end',
     paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 10,
-    maxWidth: '80%',
+    paddingHorizontal: 14,
+    borderRadius: 16,
+    marginTop: 4,
+    marginBottom: 4,
+    marginRight: 12,
+    marginLeft: 80,
   },
-  text: {
+  theirMessageContainer: {
+    backgroundColor: '#f1f0f0',
+    alignSelf: 'flex-start',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+    marginTop: 4,
+    marginBottom: 4,
+    marginRight: 80,
+    marginLeft: 12,
+  },
+  myMessageText: {
+    color: '#fff',
     fontSize: 16,
   },
-  myMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#0084ff',
-    color: '#fff',
-  },
-  otherMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#eee',
+  theirMessageText: {
     color: '#000',
-  },
-  myText: {
-    color: '#fff',
-  },
-  otherText: {
-    color: '#000',
+    fontSize: 16,
   },
 });
 

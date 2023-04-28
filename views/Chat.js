@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import Message from './components/Message';
+import Message from '../components/Message';
 
 const messages = [
   { id: 1, content: 'Hi', upvote: 3, downvote: 4 },
