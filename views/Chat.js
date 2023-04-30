@@ -4,16 +4,15 @@ import Message from '../components/Message';
 import InputBox from '../components/InputBox';
 
 const initialMessages = [
-  { id: 1, content: 'Hi', upvote: 3, downvote: 4 },
-  { id: 2, content: 'Hello', upvote: 2, downvote: 1 },
-  { id: 3, content: 'How are you?', upvote: 5, downvote: 0 },
-  { id: 4, content: 'This is a test message', upvote: 0, downvote: 0 },
+  { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
+  { id: 2, content: 'Hello', upvotes: 2, downvotes: 1 },
+  { id: 3, content: 'How are you?', upvotes: 5, downvotes: 0 },
+  { id: 4, content: 'This is a test message', upvotes: 0, downvotes: 0 },
 ];
 
 const Chat = () => {
   const [messages, setMessages] = useState(initialMessages);
-
-  const [pressedButtons, setPressedButtons] = useState({});
+  const [voteStatus, setVoteStatus] = useState({});
 
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
@@ -23,15 +22,15 @@ const Chat = () => {
       <View style={styles.voteContainer}>
         <TouchableOpacity
           onPress={() => handleVote(item.id, 'upvote')}
-          disabled={pressedButtons[item.id] === 'upvote'}
+          disabled={voteStatus[item.id] === 'upvote'}
         >
-          <Text style={styles.voteText}>↑ {item.upvote}</Text>
+          <Text style={styles.voteText}>↑ {item.upvotes}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleVote(item.id, 'downvote')}
-          disabled={pressedButtons[item.id] === 'downvote'}
+          disabled={voteStatus[item.id] === 'downvote'}
         >
-          <Text style={styles.voteText}>↓ {item.downvote}</Text>
+          <Text style={styles.voteText}>↓ {item.downvotes}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,28 +40,39 @@ const Chat = () => {
     const newMessage = {
       id: messages.length + 1,
       content,
-      upvote: 0,
-      downvote: 0,
+      upvotes: 0,
+      downvotes: 0,
     };
     setMessages([...messages, newMessage]);
   };
 
   const handleVote = (id, type) => {
+    setVoteStatus({ ...voteStatus, [id]: type });
+
     const updatedMessages = messages.map((message) => {
       if (message.id === id) {
-        let count = message[type];
-        if (count > 0) {
-          count = message[type] === 1 ? 0 : message[type] + 1;
-        } else {
-          count = message[type] === -1 ? 0 : message[type] + 1;
+        let upvotes = message["upvotes"];
+        let downvotes = message["downvotes"];
+
+        if (type === "upvote" && voteStatus[id] !== "upvote") {
+          upvotes += 1;
+          if (downvotes > 0 && voteStatus[id] === "downvote") {
+            downvotes -= 1;
+          }
+        } else if (type === "downvote" && voteStatus[id] !== "downvote") {
+          downvotes += 1;
+          if (upvotes > 0 && voteStatus[id] === "upvote") {
+            upvotes -= 1;
+          }
         }
-        return { ...message, [type]: count };
+
+        return { ...message, upvotes, downvotes };
       }
       return message;
     });
     setMessages(updatedMessages);
   };
-  
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -78,7 +88,7 @@ const Chat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#BD827D',
   },
   messageContainer: {
     flexDirection: 'row',
@@ -98,7 +108,7 @@ const styles = StyleSheet.create({
   },
   voteText: {
     fontSize: 15,
-    color: '#999',
+    color: '#0a0a0a',
     marginHorizontal: 5,
   },
 });
