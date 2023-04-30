@@ -51,14 +51,13 @@ const BasicModal = (props) => {
                     >
                         <View style={styles.modalView}>
                             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                                <Text style={styles.modalTitle}>Have your say!</Text>
+                                <Text style={styles.modalTitle}>Symposium Details</Text>
                             </TouchableWithoutFeedback>
                             <ScrollView style={{ flex: 1 }}>
                                 <TextInput
                                     style={{ width: "100%", marginTop: 4 }}
                                     variant='outlined'
-                                    label='Enter your subject...'
-                                    onChangeText={text => setSubject(text)}
+                                    label='Important Meeting'
                                     value={subject}
                                 />
                                 <Text variant="titleMedium">Topics</Text>
