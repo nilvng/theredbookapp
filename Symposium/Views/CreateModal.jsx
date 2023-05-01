@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
 import { Button as Rbutton } from "@react-native-material/core";
+import CalendarPicker from 'react-native-calendar-picker';
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
