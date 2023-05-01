@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
 import { Button as Rbutton } from "@react-native-material/core";
-import CalendarPicker from 'react-native-calendar-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
@@ -13,6 +13,31 @@ const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
     const [selectedTopics, setSelectedTopics] = useState([]);
     const [subject, setSubject] = useState("");
+    const [datePicker, setDatePicker] = useState(false);
+
+    const [date, setDate] = useState(new Date());
+
+    const [timePicker, setTimePicker] = useState(false);
+
+    const [time, setTime] = useState(new Date(Date.now()));
+
+    function showDatePicker() {
+        setDatePicker(true);
+    };
+
+    function showTimePicker() {
+        setTimePicker(true);
+    };
+
+    function onDateSelected(event, value) {
+        setDate(value);
+        setDatePicker(false);
+    };
+
+    function onTimeSelected(event, value) {
+        date.setTime(value);
+        setTimePicker(false);
+    };
 
     const handleOnPressSpeaker = (index) => {
         var updated = [...selectedSpeakers];
@@ -86,6 +111,40 @@ const CreateModal = ({ navigation, space }) => {
                                 {item}
                             </Button>
                         )} />
+
+                    {datePicker && (
+                        <DateTimePicker
+                            value={date}
+                            mode={'date'}
+                            is24Hour={true}
+                            onChange={onDateSelected}
+                        />
+                    )}
+
+                    {timePicker && (
+                        <DateTimePicker
+                            value={time}
+                            mode={'time'}
+                            is24Hour={false}
+                            onChange={onTimeSelected}
+                        />
+                    )}
+
+                    {!datePicker && (
+                        <View style={{ margin: 10 }}>
+                            <Button onPress={showDatePicker}>Select Date</Button>
+                        </View>
+                    )}
+
+                    {!timePicker && (
+                        <View style={{ margin: 10 }}>
+                            <Button onPress={showTimePicker}>Select Time</Button>
+                        </View>
+                    )}
+
+
+                    <Text> SELECTED DATE: {date ? date.toString() : ''}</Text>
+
                     <Text variant="titleMedium">Speakers</Text>
                     <View style={{ width: "100%" }} >
                         <FlatList horizontal={true}
