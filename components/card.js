@@ -1,11 +1,16 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function Card(props) {
     return (
         <View style={styles.card}>
             <View style={styles.cardContent}>
-                {props.children}
+                <View style={styles.cardTitleContainer}>
+                    <Text style={styles.cardTitle}> {props.data.title}</Text>
+                </View>
+                <View style={styles.cardHostContainer}>
+                    <Text style={styles.cardHost}> {props.data.host}</Text>
+                </View>
             </View>
         </View>
     );
@@ -21,5 +26,22 @@ const styles = StyleSheet.create({
     },
     cardContent: {
         flex: 1,
-    }
+    },
+        cardTitleContainer: {
+        flexGrow: 1,
+    },
+    cardTitle: {
+        fontSize: 15,
+        paddingLeft: 10,
+        alignSelf: 'baseline',
+    },
+    cardHostContainer: {
+        height: '30%',
+        borderRadius: 10,
+        backgroundColor: '#F3EED9',
+    },
+    cardHost: {
+        paddingHorizontal: 10,
+
+    },
 });

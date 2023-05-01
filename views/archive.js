@@ -4,9 +4,6 @@ import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
 
-const symposiums = [
-    { category: 'podcasts', data: dummyPodcasts },
-]
 
 const dummyPodcasts = [
     { title: 'Podcast #1', description: 'Welcome to our podcast!', host: 'Nick' },
@@ -29,6 +26,11 @@ const dummyDiscussions = [
     { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry', host: 'Beja' },
 ]
 
+const symposiums = [
+    { category: 'Podcasts', data: dummyPodcasts },
+    { category: 'Discussions', data: dummyDiscussions },
+]
+
 
 
 export default function Archive({ navigation }) {
@@ -43,32 +45,45 @@ export default function Archive({ navigation }) {
     const renderHeader = (header) => {
         return (
             <View>
+                <Separator/>
                 <Text style={styles.sectionHeader}>{header}</Text>
                 <Separator />
             </View>
         )
     }
 
-    // Component should render everything in the symposiums array
-    // The map itself is working fine, as the category is displayed fine
-    // However, when trying to display the title through the cards, there is nothing being rendered
+    const renderItem = (item) => {
+        console.log(item)
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setPressed(!pressed);
+                    setModalVisible(!modalVisible);
+                    setData(item);
+                }}
+            >
+                <Card>
+                    <View style={styles.cardTitleContainer}>
+                        <Text style={styles.cardTitle}> {item.title}</Text>
+                    </View>
+                    <View style={styles.cardHostContainer}>
+                        <Text style={styles.cardHost}> {item.host}</Text>
+                    </View>
+                </Card>
+            </TouchableOpacity>
+        )
+    };
+
     const SymposiumList = () => {
         return symposiums.map((sym, i) => {
             return (
                 <FlatList
-                    key = {i}
+                    key={i}
                     style={{ width: '94%' }}
                     data={sym.data}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
-                            <Card>
-                                <View style={styles.cardTitleContainer}>
-                                    <Text style={styles.cardTitle}> {item.title}</Text>
-                               </View>
-                                <View style={styles.cardHostContainer}>
-                                    <Text style={styles.cardHost}> {item.title}</Text>
-                                </View>
-                            </Card>
+                            <Card data={item} />
                         </TouchableOpacity>)}
                     ItemSeparatorComponent={<Separator />}
                     ListHeaderComponent={renderHeader(sym.category)}
@@ -76,6 +91,7 @@ export default function Archive({ navigation }) {
             )
         })
     }
+
 
     return (
         <View style={styles.container}>
@@ -105,7 +121,7 @@ export default function Archive({ navigation }) {
                 <Text style={styles.title}>Archive</Text>
             </HStack>
 
-            <SymposiumList/>
+            <SymposiumList />
 
 
             <HStack>
@@ -168,21 +184,5 @@ const styles = StyleSheet.create({
         height: 10,
         width: '100%',
     },
-    cardTitleContainer: {
-        flexGrow: 1,
-    },
-    cardTitle: {
-        fontSize: 15,
-        paddingLeft: 10,
-        alignSelf: 'baseline',
-    },
-    cardHostContainer: {
-        height: '30%',
-        borderRadius: 10,
-        backgroundColor: '#F3EED9',
-    },
-    cardHost: {
-        paddingHorizontal: 10,
 
-    },
 });
