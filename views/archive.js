@@ -52,28 +52,6 @@ export default function Archive({ navigation }) {
         )
     }
 
-    const renderItem = (item) => {
-        console.log(item)
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    setPressed(!pressed);
-                    setModalVisible(!modalVisible);
-                    setData(item);
-                }}
-            >
-                <Card>
-                    <View style={styles.cardTitleContainer}>
-                        <Text style={styles.cardTitle}> {item.title}</Text>
-                    </View>
-                    <View style={styles.cardHostContainer}>
-                        <Text style={styles.cardHost}> {item.host}</Text>
-                    </View>
-                </Card>
-            </TouchableOpacity>
-        )
-    };
-
     const SymposiumList = () => {
         return symposiums.map((sym, i) => {
             return (
