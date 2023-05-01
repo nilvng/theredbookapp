@@ -25,8 +25,8 @@ const dummyPodcasts = [
 ]
 
 const dummyDiscussions = [
-    { title: 'Ex-Amazon workers, share you experiences!', description: 'Discussion on prior experiences of amazon warehouse workers' },
-    { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry' },
+    { title: 'Ex-Amazon workers, share you experiences!', description: 'Discussion on prior experiences of amazon warehouse workers', host: 'Beja' },
+    { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry', host: 'Beja' },
 ]
 
 
@@ -47,6 +47,34 @@ export default function Archive({ navigation }) {
                 <Separator />
             </View>
         )
+    }
+
+    // Component should render everything in the symposiums array
+    // The map itself is working fine, as the category is displayed fine
+    // However, when trying to display the title through the cards, there is nothing being rendered
+    const SymposiumList = () => {
+        return symposiums.map((sym, i) => {
+            return (
+                <FlatList
+                    key = {i}
+                    style={{ width: '94%' }}
+                    data={sym.data}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
+                            <Card>
+                                <View style={styles.cardTitleContainer}>
+                                    <Text style={styles.cardTitle}> {item.title}</Text>
+                               </View>
+                                <View style={styles.cardHostContainer}>
+                                    <Text style={styles.cardHost}> {item.title}</Text>
+                                </View>
+                            </Card>
+                        </TouchableOpacity>)}
+                    ItemSeparatorComponent={<Separator />}
+                    ListHeaderComponent={renderHeader(sym.category)}
+                />
+            )
+        })
     }
 
     return (
@@ -77,23 +105,7 @@ export default function Archive({ navigation }) {
                 <Text style={styles.title}>Archive</Text>
             </HStack>
 
-            <FlatList
-                style={{ width: '95%' }}
-                data={dummyPodcasts}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
-                        <Card>
-                            <View style={styles.cardTitleContainer}>
-                                <Text style={styles.cardTitle}> {item.title}</Text>
-                            </View>
-                            <View style={styles.cardHostContainer}>
-                                <Text style={styles.cardHost}> {item.host}</Text>
-                            </View>
-                        </Card>
-                    </TouchableOpacity>)}
-                ItemSeparatorComponent={<Separator />}
-                ListHeaderComponent={renderHeader('Podcasts')}
-            />
+            <SymposiumList/>
 
 
             <HStack>
