@@ -21,6 +21,7 @@ export default function App() {
         name = "Archive"
         component={Archive}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
