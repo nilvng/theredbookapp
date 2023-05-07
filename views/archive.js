@@ -83,13 +83,13 @@ export default function Archive({ navigation }) {
                 }}>
 
                 <View style={styles.modalView}>
-                    <View style={styles.container}>
+                    <View style={styles.modalContainer}>
                         <Text style={styles.modalTitle}>{currentData.title}</Text>
                         <Text>{currentData.description}</Text>
                     </View>
 
-                    <View>
-                        <Button style={styles.button} title="Back" color="purple"
+                    <View style={styles.modalButton}>
+                        <Button style={styles.button} title="Back" color="white"
                             onPress={() => setModalVisible(!modalVisible)} />
                     </View>
                 </View>
@@ -147,16 +147,30 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         color: 'white'
     },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: '#F3EED9',
+        color: '#FFFFFF',
+        alignItems: 'center',
+        paddingVertical: 25,
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+    },
     modalView: {
         flex: 1,
         paddingTop: '60%',
         height: '40%',
+        color: '#FFF4F1',
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
+    },
+    modalButton: {
+        color: 'black',
+        backgroundColor: 'white',
     },
     separator: {
         height: 10,
