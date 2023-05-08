@@ -4,6 +4,7 @@ import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
 import { getAll } from '../Symposium/Models/symposium-db.js';
+import DetailedModal from './detailedView';
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -57,10 +58,7 @@ export default function Archive({ navigation }) {
                 }}>
 
                 <View style={styles.modalView}>
-                    <View style={styles.modalContainer}>
-                        <Text style={styles.modalTitle}>{currentData.title}</Text>
-                        <Text>{currentData.host}</Text>
-                    </View>
+                    <DetailedModal symposium={currentData} />
 
                     <View style={styles.modalButton}>
                         <Button style={styles.button} title="Back" color="white"
@@ -132,8 +130,8 @@ const styles = StyleSheet.create({
     },
     modalView: {
         flex: 1,
-        paddingTop: '60%',
-        height: '40%',
+        paddingTop: '70%',
+        height: '30%',
         color: '#FFF4F1',
     },
     modalTitle: {
