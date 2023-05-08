@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import { VStack, Button, HStack } from "@react-native-material/core";
+import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
 
 const symposiums = [
-    {category: 'podcasts', data: dummyPodcasts},
+    { category: 'podcasts', data: dummyPodcasts },
 ]
 
 const dummyPodcasts = [
@@ -97,7 +98,9 @@ export default function Archive({ navigation }) {
 
             <HStack>
                 <Button style={[styles.button]} title="Go back" color="purple"
-                    onPress={() => navigation.navigate('Call')} />
+                    onPress={() => {
+                        navigation.dispatch(StackActions.pop(1));
+                    }} />
             </HStack>
 
         </View>
