@@ -9,7 +9,7 @@ import { insert } from '../Models/symposium-db';
 
 const topicList = ["Entertainment", "Politics", "IT", "Business"]
 
-const CreateModal = (props) => {
+const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
     const [selectedTopics, setSelectedTopics] = useState([]);
     const [subject, setSubject] = useState("");
@@ -45,7 +45,7 @@ const CreateModal = (props) => {
         routeBack()
     }
     const routeBack = () => {
-        props.navigation.goBack();
+        navigation.goBack();
     }
 
     return (
@@ -54,9 +54,14 @@ const CreateModal = (props) => {
             style={{ flex: 1 }}
         >
             <View style={styles.modalView}>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <HStack style={{ width: "100%", alignSelf: "baseline" }} direction='row' items='center' justify='between'>
+                    <IconButton
+                        icon={props => <Icon name='close' {...props} />}
+                        onPress={() => routeBack()} />
                     <Text style={styles.modalTitle}>Have your say!</Text>
-                </TouchableWithoutFeedback>
+                    <IconButton
+                        onPress={() => { }} />
+                </HStack>
                 <ScrollView style={{ flex: 1 }}>
                     <TextInput
                         style={{ width: "100%", marginTop: 4 }}
@@ -84,7 +89,7 @@ const CreateModal = (props) => {
                     <Text variant="titleMedium">Speakers</Text>
                     <View style={{ width: "100%" }} >
                         <FlatList horizontal={true}
-                            data={props.space.speakers}
+                            data={space.speakers}
                             keyExtractor={item => item.id}
                             extraData={selectedSpeakers}
                             renderItem={({ index, item }) => (
@@ -159,7 +164,6 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: 20,
-        marginVertical: 8,
         textAlign: 'center',
     },
     buttonContainer: {

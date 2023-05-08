@@ -7,6 +7,7 @@ import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/
 import CreateModal from './Symposium/Views/CreateModal';
 import { useState, useCallback, useEffect } from 'react';
 import { createTable, getAll } from './Symposium/Models/symposium-db';
+import Home from './views/home';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,9 @@ export default function App() {
       <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
+        <Stack.Screen
+          name="Home"
+          component={Home} />
         <Stack.Screen
           name="Call"
           component={IncomingCall}
