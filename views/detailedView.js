@@ -1,47 +1,19 @@
 import React, { useState } from "react";
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
-import Modal from "react-native-modal";
+import { Button, StatusBar, StyleSheet, Text, View, Modal } from "react-native";
 
-function DetailedModal() {
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+function DetailedModal({ symposium }) {
 
   return (
-    <View style={styles.flexView}>
-      <StatusBar />
-      <View style={styles.btnContainer}>
-        <Button title="Detail Information" onPress={toggleModal} />
+    <View style={styles.modalView}>
+      <View style={styles.center}>
+        <View style={styles.barIcon} />
+        <Text style={styles.title}>Symposium Details</Text>
+        <Text style={styles.head1}>{symposium.title}</Text>
+        <Text style={styles.text}>{symposium.topic}</Text>
+        <Text style={styles.text}>{symposium.host}</Text>
+        <Text style={styles.text}>Scheduled: {symposium.startDate} </Text>
+        <Button title="Remind/Join" />
       </View>
-
-      <Modal
-        onBackdropPress={() => setModalVisible(false)}
-        onBackButtonPress={() => setModalVisible(false)}
-        isVisible={isModalVisible}
-        swipeDirection="down"
-        onSwipeComplete={toggleModal}
-        animationIn="bounceInUp"
-        animationOut="bounceOutDown"
-        animationInTiming={900}
-        animationOutTiming={500}
-        backdropTransitionInTiming={1000}
-        backdropTransitionOutTiming={500}
-        style={styles.modal}
-      >
-        <View style={styles.modalContent}>
-          <View style={styles.center}>
-            <View style={styles.barIcon} />
-            <Text style={styles.title}>Symposium Details</Text>
-            <Text style={styles.head1}>Important Meeting</Text>
-            <Text style={styles.text}>Topics: IT, Business</Text>
-            <Text style={styles.text}>Speakers: </Text>
-            <Text style={styles.text}>Scheduled: </Text>
-            <Button title="Remind/Join" />
-          </View>
-        </View>
-      </Modal>
     </View>
 
   )
@@ -54,18 +26,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  modal: {
-    justifyContent: "flex-end",
-    margin: 0,
-  },
-  modalContent: {
+  modalView: {
     backgroundColor: "#F3EED9",
-    paddingTop: 12,
-    paddingHorizontal: 12,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    minHeight: 400,
-    paddingBottom: 20,
+    flex: 1,
+    color: '#FFF4F1',
   },
   center: {
     display: "flex",
