@@ -1,4 +1,5 @@
 import { View, StyleSheet } from "react-native";
+import React from 'react';
 import { Button, HStack, VStack } from "@react-native-material/core";
 
 function Home({ navigation }) {
@@ -13,6 +14,9 @@ function Home({ navigation }) {
             />
             <Button style={styles.button} title="Incoming Call" color="blue"
                 onPress={() => navigation.navigate('Call')}
+            />
+            <Button style={styles.button} title="Chat" color="red"
+                onPress={() => navigation.navigate('Chat')}
             />
         </VStack>
     );

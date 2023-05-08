@@ -1,3 +1,5 @@
+import React from 'react';
+import Chat from './views/Chat';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Archive from './views/archive';
@@ -47,6 +49,9 @@ export default function App() {
           component={Archive}
         />
         <Stack.Screen
+          name="Chat"
+          component={Chat} />
+        <Stack.Screen
           name='Create'
           options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
           {props => <CreateModal {...props} space={testData} />}
@@ -59,8 +64,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#303030',
-    color: '#FFFFFF',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
