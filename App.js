@@ -1,9 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Archive from './views/archive';
 import IncomingCall from './views/incomingCall';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Login from './views/login';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +13,10 @@ export default function App() {
       <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
+        <Stack.Screen
+        name = "Login"
+        component={Login}
+        />
         <Stack.Screen
         name = "Call"
         component={IncomingCall}
