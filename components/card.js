@@ -10,6 +10,14 @@ export default function Card(props) {
                 </View>
                 <View style={styles.cardHostContainer}>
                     <Text style={styles.cardHost}> {props.data.host}</Text>
+                
+                    <Text style={styles.cardHost}> {props.data.topic}</Text>
+                
+                    <Text style={styles.cardHost}> {props.data.status}</Text>
+                
+                    <Text style={styles.cardHost}> {props.data.date}</Text>
+                
+                    <Text style={styles.cardHost}> {props.data.approved}</Text>
                 </View>
             </View>
         </View>

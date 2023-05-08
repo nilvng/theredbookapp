@@ -1,73 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
-
-
-const dummyPodcasts = [
-    { title: 'Podcast #1', description: 'Welcome to our podcast!', host: 'Nick' },
-    { title: 'Podcast #2', description: 'Heated discussion with the hosts', host: 'Nick' },
-    { title: 'Podcast #3', description: 'Viewer Q&A', host: 'Nick' },
-    { title: 'Dummy Podcast 1', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 2', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 3', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 4', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 5', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 6', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 7', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 8', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 9', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 10', description: 'Dummy podcast', host: 'Nick' }
-]
-
-const dummyDiscussions = [
-    { title: 'Ex-Amazon workers, share you experiences!', description: 'Discussion on prior experiences of amazon warehouse workers', host: 'Beja' },
-    { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry', host: 'Beja' },
-]
-
-const symposiums = [
-    { category: 'Podcasts', data: dummyPodcasts },
-    { category: 'Discussions', data: dummyDiscussions },
-]
-
-
+import { getAll } from '../Symposium/Models/symposium-db.js';
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [pressed, setPressed] = useState(false);
     const [currentData, setData] = useState("")
+    const [currentSymposiums, setSymposiums] = useState();
+
+    const loadData = useCallback(async () => {
+        try {
+            getAll().then((data) => {
+                console.log(data);
+                setSymposiums(data);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
 
     const Separator = () => {
         return <View style={styles.separator} />;
     };
 
-    const renderHeader = (header) => {
-        return (
-            <View>
-                <Separator/>
-                <Text style={styles.sectionHeader}>{header}</Text>
-                <Separator />
-            </View>
-        )
-    }
-
     const SymposiumList = () => {
-        return symposiums.map((sym, i) => {
-            return (
-                <FlatList
-                    key={i}
-                    style={{ width: '94%' }}
-                    data={sym.data}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
-                            <Card data={item} />
-                        </TouchableOpacity>)}
-                    ItemSeparatorComponent={<Separator />}
-                    ListHeaderComponent={renderHeader(sym.category)}
-                />
-            )
-        })
+        return (
+            <FlatList
+                style={{ width: '94%' }}
+                data={currentSymposiums}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
+                        <Card data={item} />
+                    </TouchableOpacity>)}
+                ItemSeparatorComponent={<Separator />}
+            />
+        )
     }
 
 
