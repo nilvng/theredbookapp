@@ -59,7 +59,7 @@ export default function Archive({ navigation }) {
                 <View style={styles.modalView}>
                     <View style={styles.modalContainer}>
                         <Text style={styles.modalTitle}>{currentData.title}</Text>
-                        <Text>{currentData.description}</Text>
+                        <Text>{currentData.host}</Text>
                     </View>
 
                     <View style={styles.modalButton}>
