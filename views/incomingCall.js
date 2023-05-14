@@ -3,7 +3,7 @@ import { VStack, Box, Divider, Avatar, HStack, Button, Spacer } from "@react-nat
 import { StackActions } from '@react-navigation/native';
 
 export const testData = {
-  name: 'Important Meeting',
+  title: 'Important Meeting',
   startDate: '2021-04-01T12:00:00Z',
   speakers: [
     {
@@ -40,7 +40,7 @@ export default function IncomingCall({ navigation }) {
       <VStack m={4} spacing={2}>
         {/* Title */}
         <Box mt={20} pb={3}>
-          <Text style={styles.title}>'{testData.name}' has Started</Text>
+          <Text style={styles.title}>'{testData.title}' has Started</Text>
           <Text style={styles.subtitle}>{testData.speakers.length} speaker{testData.speakers.length == 1 ? '' : 's'}</Text>
         </Box>
         {/* Avatars */}
