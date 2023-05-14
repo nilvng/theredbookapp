@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from
 import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
-import { getAll } from '../Symposium/Models/symposium-db.js';
+import { getAll, createTable } from '../Symposium/Models/symposium-db.js';
 import DetailedModal from './detailedView';
 
 export default function Archive({ navigation }) {
@@ -14,6 +14,7 @@ export default function Archive({ navigation }) {
 
     const loadData = useCallback(async () => {
         try {
+            await createTable();
             getAll().then((data) => {
                 console.log(data);
                 setSymposiums(data);
@@ -70,10 +71,7 @@ export default function Archive({ navigation }) {
             <HStack>
                 <Text style={styles.title}>Archive</Text>
             </HStack>
-
             <SymposiumList />
-
-
             <HStack>
                 <Button style={[styles.button]} title="Go back" color="purple"
                     onPress={() => {
