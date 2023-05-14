@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
+        borderRadius: 90,
+        width: "70%",
         padding: 4
     },
 })
