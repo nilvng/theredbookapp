@@ -82,7 +82,7 @@ const Chat = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-        <Text style={styles.buttonText}>Go Back</Text>
+        <Text style={styles.buttonText}>←</Text>
       </TouchableOpacity>
       <FlatList
         data={messages}
@@ -96,9 +96,9 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:40,
+    paddingTop:75,
     flex: 1,
-    backgroundColor: '#5A5A5A',
+    backgroundColor: '#F3EED9',
   },
   messageContainer: {
     flexDirection: 'row',
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   button: {
-    backgroundColor: 'purple',
-    borderRadius: 4,
-    padding: 10,
+    backgroundColor: 'blue',
+    borderRadius: 5,
+    padding: 5,
     margin: 10,
-    width: 150,
+    width: 50,
     alignItems: 'center',
   },
   buttonText: {
