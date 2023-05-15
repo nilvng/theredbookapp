@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Message from '../components/Message';
 import InputBox from '../components/InputBox';
 
@@ -13,6 +14,7 @@ const initialMessages = [
 const Chat = () => {
   const [messages, setMessages] = useState(initialMessages);
   const [voteStatus, setVoteStatus] = useState({});
+  const navigation = useNavigation();
 
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
@@ -51,17 +53,17 @@ const Chat = () => {
 
     const updatedMessages = messages.map((message) => {
       if (message.id === id) {
-        let upvotes = message["upvotes"];
-        let downvotes = message["downvotes"];
+        let upvotes = message['upvotes'];
+        let downvotes = message['downvotes'];
 
-        if (type === "upvote" && voteStatus[id] !== "upvote") {
+        if (type === 'upvote' && voteStatus[id] !== 'upvote') {
           upvotes += 1;
-          if (downvotes > 0 && voteStatus[id] === "downvote") {
+          if (downvotes > 0 && voteStatus[id] === 'downvote') {
             downvotes -= 1;
           }
-        } else if (type === "downvote" && voteStatus[id] !== "downvote") {
+        } else if (type === 'downvote' && voteStatus[id] !== 'downvote') {
           downvotes += 1;
-          if (upvotes > 0 && voteStatus[id] === "upvote") {
+          if (upvotes > 0 && voteStatus[id] === 'upvote') {
             upvotes -= 1;
           }
         }
@@ -73,8 +75,15 @@ const Chat = () => {
     setMessages(updatedMessages);
   };
 
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={handleGoBack} style={styles.button}>
+        <Text style={styles.buttonText}>Go Back</Text>
+      </TouchableOpacity>
       <FlatList
         data={messages}
         renderItem={renderItem}
@@ -87,7 +96,7 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:50,
+    paddingTop:40,
     flex: 1,
     backgroundColor: '#BD827D',
   },
@@ -112,6 +121,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#0a0a0a',
     marginHorizontal: 5,
+  },
+  button: {
+    backgroundColor: 'purple',
+    borderRadius: 4,
+    padding: 10,
+    margin: 10,
+    width: 150,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
