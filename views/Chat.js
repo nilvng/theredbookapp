@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop:75,
     flex: 1,
-    backgroundColor: '#F3EED9',
+    backgroundColor: '#FFFFFF', 
   },
   messageContainer: {
     flexDirection: 'row',
