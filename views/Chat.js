@@ -87,23 +87,15 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop:40,
     flex: 1,
     backgroundColor: '#BD827D',
   },
-  sectionHeader: {
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 2,
-    fontSize: 30,
-    fontWeight: 'bold',
-    backgroundColor: 'grey',
-    color: 'white'
-},
   messageContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,
+    marginHorizontal: 15,
     justifyContent: 'flex-start',
   },
   message: {
