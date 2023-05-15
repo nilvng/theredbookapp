@@ -87,7 +87,7 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:40,
+    paddingTop:50,
     flex: 1,
     backgroundColor: '#BD827D',
   },
