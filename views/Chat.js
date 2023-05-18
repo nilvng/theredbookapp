@@ -26,6 +26,7 @@ const Chat = () => {
         >
           <Text style={styles.voteText}>↑ {item.upvotes}</Text>
         </TouchableOpacity>
+        <View style={{ width: 20 }} />
         <TouchableOpacity
           onPress={() => handleVote(item.id, 'downvote')}
           disabled={voteStatus[item.id] === 'downvote'}
@@ -104,12 +105,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '17%',
+    width: '15%'
   },
   voteText: {
     fontSize: 15,
-    color: '#0a0a0a',
-    marginHorizontal: 5,
+    color: 'black',
+    marginHorizontal: 10,
+  },
+  button: {
+    backgroundColor: '#F3EED9',
+    borderRadius: 5,
+    padding: 5,
+    margin: 10,
+    width: 50,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
