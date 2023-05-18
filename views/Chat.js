@@ -82,7 +82,7 @@ const Chat = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-        <Text style={styles.buttonText}>←</Text>
+        <Text style={styles.buttonText}> ← </Text>
       </TouchableOpacity>
       <FlatList
         data={messages}
