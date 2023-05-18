@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Message from '../components/Message';
 import InputBox from '../components/InputBox';
 import { Button as ButtonPaper } from 'react-native-paper';
+
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
   { id: 2, content: 'Hello', upvotes: 2, downvotes: 1 },
@@ -91,9 +92,12 @@ const Chat = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-        <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={styles.header}> 
+       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
+      <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
+       </TouchableOpacity>
+       <Text style={styles.title}> Symposium (Subject) </Text>
+  </View>
       <FlatList
         data={messages}
         renderItem={renderItem}
@@ -106,15 +110,31 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 75,
+    paddingTop: 60,
     flex: 1,
     backgroundColor: '#AFEEEE',
   },
+
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 1,
+    marginTop: 10
+  },
+  
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 50,
+    marginLeft: 15
+  },
+
   messageContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
     marginHorizontal: 15
+
   },
   message: {
     width: '100%',
