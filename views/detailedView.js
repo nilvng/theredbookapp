@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
+import AvatarName from "../components/AvatarName";
 
 function DetailedModal({ symposium, backButtonPressed }) {
 
@@ -15,10 +16,18 @@ function DetailedModal({ symposium, backButtonPressed }) {
         onPress={() => backButtonPressed(false)} />
       <View style={styles.center}>
         <Text style={styles.title}>{symposium.title}</Text>
-        <Text style={styles.text}>{symposium.topic}</Text>
+        <Text style={styles.subtitle}>Business - IT - AI</Text>
       </View>
-      <Text style={styles.head1}>Speaker</Text>
-      <Text style={styles.text}>{symposium.host}</Text>
+      <View style={{ marginHorizontal: 12 }}>
+        <Text style={styles.head1}>Speaker</Text>
+        <HStack>
+          <AvatarName name={symposium.host} />
+          {/* <AvatarName name={"Crystal"} />
+          <AvatarName name={"Jeremy C"} /> */}
+
+        </HStack>
+      </View>
+
       <HStack
         style={styles.buttonContainer} fill wrap="nowrap" spacing={8}>
         <Button style={{
@@ -27,7 +36,7 @@ function DetailedModal({ symposium, backButtonPressed }) {
         }} title="Join" color="purple" />
         <IconButton icon="chat" color="#1E1E1E" size={24} />
       </HStack>
-    </View>
+    </View >
 
   )
 };
@@ -60,13 +69,18 @@ const styles = StyleSheet.create({
   title: {
     color: "#1E1E1E",
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 25,
     marginTop: 10,
   },
   head1: {
     color: "#1E1E1E",
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
+    marginTop: 10,
+  },
+  subtitle: {
+    color: "#1E1E1E",
+    fontSize: 16,
     marginTop: 10,
   },
   text: {
