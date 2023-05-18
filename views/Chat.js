@@ -22,20 +22,24 @@ const Chat = () => {
       <View style={styles.voteContainer}>
         <ButtonPaper
           icon="thumb-up"
-          mode="outlined"
+          buttonColor='#F3EED9'
+          textColor='black'
           onPress={() => handleVote(item.id, 'upvote')}
           disabled={voteStatus[item.id] === 'upvote'}
         >
           {item.upvotes}
         </ButtonPaper>
-        <View style={{ width: 20 }} />
+
+        <View style={{ width: 10 }} />
+
         <ButtonPaper
-          icon="thumb-up"
-          mode="outlined"
+          icon="thumb-down"
+          buttonColor='#F3EED9'
+          textColor='black'
           onPress={() => handleVote(item.id, 'downvote')}
           disabled={voteStatus[item.id] === 'downvote'}
         >
-          {item.upvotes}
+          {item.downvotes}
         </ButtonPaper>
       </View>
     </View>
@@ -97,20 +101,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#AFEEEE',
   },
   messageContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     marginVertical: 10,
-    justifyContent: 'flex-start',
+    marginHorizontal: 15
   },
   message: {
-    width: '70%',
+    width: '100%',
     alignSelf: 'center',
   },
   voteContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '15%'
+    width: '0%',
+
   },
   voteText: {
     fontSize: 15,
