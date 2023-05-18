@@ -24,7 +24,8 @@ const Chat = () => {
           onPress={() => handleVote(item.id, 'upvote')}
           disabled={voteStatus[item.id] === 'upvote'}
         >
-          <Text style={styles.voteText}>↑ {item.upvotes}</Text>
+          <MaterialCommunityIcons name="thumb-up" size={12} />
+          <Text style={styles.voteText}>{item.upvotes}</Text>
         </TouchableOpacity>
         <View style={{ width: 20 }} />
         <TouchableOpacity
