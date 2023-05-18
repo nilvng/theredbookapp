@@ -27,7 +27,7 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'upvote')}
-          disabled={voteStatus[item.id] === 'upvote'}
+          disabled={voteStatus[item.id] === 'upvote'}    
         >
           {item.upvotes}
         </ButtonPaper>
@@ -39,7 +39,7 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'downvote')}
-          disabled={voteStatus[item.id] === 'downvote'}
+          disabled={voteStatus[item.id] === 'downvote'}        
         >
           {item.downvotes}
         </ButtonPaper>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: 'center',
-    marginBottom: 50,
+    marginBottom: 10,
     marginLeft: 15
   },
 
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
+
   voteContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+
 });
 
 export default Chat;
