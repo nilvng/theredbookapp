@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Button } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Message from '../components/Message';
 import InputBox from '../components/InputBox';
@@ -82,7 +83,7 @@ const Chat = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-        <Text style={styles.buttonText}> ← </Text>
+        <MaterialCommunityIcons name="arrow-left" size={24} color="white" />
       </TouchableOpacity>
       <FlatList
         data={messages}
