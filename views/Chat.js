@@ -27,9 +27,10 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'upvote')}
-          disabled={voteStatus[item.id] === 'upvote'}    
+          labelStyle={{ fontSize: 12 }}
+          style={{ height: 38 }}
         >
-          {item.upvotes}
+          <Text style={{ fontSize: 12 }}>{item.upvotes}</Text>
         </ButtonPaper>
 
         <View style={{ width: 10 }} />
@@ -39,9 +40,10 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'downvote')}
-          disabled={voteStatus[item.id] === 'downvote'}        
+          labelStyle={{ fontSize: 12 }}
+          style={{ height: 38 }}
         >
-          {item.downvotes}
+          <Text style={{ fontSize: 12 }}>{item.downvotes}</Text>
         </ButtonPaper>
       </View>
     </View>
