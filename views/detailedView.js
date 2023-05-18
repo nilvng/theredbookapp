@@ -1,22 +1,32 @@
 import React, { useState } from "react";
-import { Button, StatusBar, StyleSheet, Text, View, Modal } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { HStack, Button } from "@react-native-material/core";
+import { IconButton } from "react-native-paper";
 
-function DetailedModal({ symposium }) {
+function DetailedModal({ symposium, backButtonPressed }) {
 
   return (
     <View style={styles.modalView}>
+      <IconButton
+        style={{ alignSelf: "flex-end", marginTop: 12, marginRight: 12 }}
+        icon="close"
+        color="#1E1E1E"
+        size={24}
+        onPress={() => backButtonPressed(false)} />
       <View style={styles.center}>
-        <View style={styles.barIcon} />
         <Text style={styles.title}>{symposium.title}</Text>
-        <Text style={styles.head1}>Topics:</Text>
         <Text style={styles.text}>{symposium.topic}</Text>
-        <Text style={styles.head1}>Hosts:</Text>
-        <Text style={styles.text}>{symposium.host}</Text>
-        <Text style={styles.head1}>Scheduled:</Text>
-        <Text style={styles.text}> {symposium.startDate} </Text>
-
-        <Button title="Join" />
       </View>
+      <Text style={styles.head1}>Speaker</Text>
+      <Text style={styles.text}>{symposium.host}</Text>
+      <HStack
+        style={styles.buttonContainer} fill wrap="nowrap" spacing={8}>
+        <Button style={{
+          flexGrow: 1,
+          justifyContent: 'center',
+        }} title="Join" color="purple" />
+        <IconButton icon="chat" color="#1E1E1E" size={24} />
+      </HStack>
     </View>
 
   )
@@ -64,10 +74,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 10,
   },
-  btnContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 500,
-  },
+  buttonContainer: {
+    width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 12,
+    paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
+  }
 });
