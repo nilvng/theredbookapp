@@ -31,7 +31,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+<<<<<<< HEAD
     backgroundColor: '#fff',
+=======
+    backgroundColor: '#FAF7E2',
+>>>>>>> 3c3d8a3 (Allign the vote)
     padding: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#aaa',
