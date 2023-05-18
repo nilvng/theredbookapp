@@ -29,9 +29,10 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'upvote')}
-          disabled={voteStatus[item.id] === 'upvote'}    
+          labelStyle={{ fontSize: 12 }}
+          style={{ height: 38 }}
         >
-        {item.upvotes}
+          <Text style={{ fontSize: 12 }}>{item.upvotes}</Text>
         </ButtonPaper>
 
         <View style={{ width: 10 }} />
@@ -41,7 +42,8 @@ const Chat = () => {
           buttonColor='#F3EED9'
           textColor='black'
           onPress={() => handleVote(item.id, 'downvote')}
-          disabled={voteStatus[item.id] === 'downvote'}        
+          labelStyle={{ fontSize: 12 }}
+          style={{ height: 38 }}
         >
           {item.downvotes}
         </ButtonPaper>
@@ -92,12 +94,12 @@ const Chat = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}> 
-       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-      <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
-       </TouchableOpacity>
-       <Text style={styles.title}> Symposium (Subject) </Text>
-  </View>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleGoBack} style={styles.button}>
+          <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.title}> Symposium (Subject) </Text>
+      </View>
       <FlatList
         data={messages}
         renderItem={renderItem}
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 1,
     marginTop: 10
   },
-  
+
   title: {
     fontSize: 24,
     textAlign: 'center',
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: '0%',
-    
+
   },
   voteText: {
     fontSize: 15,
