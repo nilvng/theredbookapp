@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Message from '../components/Message';
 import InputBox from '../components/InputBox';
-
+import { Button as ButtonPaper } from 'react-native-paper';
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
   { id: 2, content: 'Hello', upvotes: 2, downvotes: 1 },
@@ -23,19 +23,23 @@ const Chat = () => {
         <Message content={item.content} />
       </View>
       <View style={styles.voteContainer}>
-        <TouchableOpacity
+        <ButtonPaper
+          icon="thumb-up"
+          mode="outlined"
           onPress={() => handleVote(item.id, 'upvote')}
           disabled={voteStatus[item.id] === 'upvote'}
         >
-          <MaterialCommunityIcons name="thumb-up" size={12}/>
-        </TouchableOpacity>
+          {item.upvotes}
+        </ButtonPaper>
         <View style={{ width: 20 }} />
-        <TouchableOpacity
+        <ButtonPaper
+          icon="thumb-up"
+          mode="outlined"
           onPress={() => handleVote(item.id, 'downvote')}
           disabled={voteStatus[item.id] === 'downvote'}
         >
-          <MaterialCommunityIcons name="thumb-down" size={12}/>
-        </TouchableOpacity>
+          {item.upvotes}
+        </ButtonPaper>
       </View>
     </View>
   );
@@ -98,9 +102,9 @@ const Chat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:75,
+    paddingTop: 75,
     flex: 1,
-    backgroundColor: '#AFEEEE', 
+    backgroundColor: '#AFEEEE',
   },
   messageContainer: {
     flexDirection: 'row',
