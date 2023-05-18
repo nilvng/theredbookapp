@@ -7,12 +7,15 @@ function DetailedModal({ symposium }) {
     <View style={styles.modalView}>
       <View style={styles.center}>
         <View style={styles.barIcon} />
-        <Text style={styles.title}>Symposium Details</Text>
-        <Text style={styles.head1}>{symposium.title}</Text>
+        <Text style={styles.title}>{symposium.title}</Text>
+        <Text style={styles.head1}>Topics:</Text>
         <Text style={styles.text}>{symposium.topic}</Text>
+        <Text style={styles.head1}>Hosts:</Text>
         <Text style={styles.text}>{symposium.host}</Text>
-        <Text style={styles.text}>Scheduled: {symposium.startDate} </Text>
-        <Button title="Remind/Join" />
+        <Text style={styles.head1}>Scheduled:</Text>
+        <Text style={styles.text}> {symposium.startDate} </Text>
+
+        <Button title="Join" />
       </View>
     </View>
 
@@ -28,6 +31,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: "#F3EED9",
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
     flex: 1,
     color: '#FFF4F1',
   },
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   head1: {
     color: "#1E1E1E",
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 20,
     marginTop: 10,
   },
   text: {
