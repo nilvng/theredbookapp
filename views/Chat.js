@@ -29,6 +29,7 @@ const Chat = () => {
         >
           <MaterialCommunityIcons name="thumb-up" size={12}/>
         </TouchableOpacity>
+        <View style={{ width: 20 }} />
         <TouchableOpacity
           onPress={() => handleVote(item.id, 'downvote')}
           disabled={voteStatus[item.id] === 'downvote'}
@@ -116,12 +117,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '15%',
-
+    width: '15%'
   },
   voteText: {
     fontSize: 15,
-    color: '#0a0a0a',
+    color: 'black',
     marginHorizontal: 10,
   },
   button: {
