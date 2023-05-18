@@ -28,6 +28,7 @@ const Chat = () => {
           disabled={voteStatus[item.id] === 'upvote'}
         >
           <MaterialCommunityIcons name="thumb-up" size={12}/>
+          <Text style={styles.voteText}>{item.upvotes}</Text>
         </TouchableOpacity>
         <View style={{ width: 20 }} />
         <TouchableOpacity
