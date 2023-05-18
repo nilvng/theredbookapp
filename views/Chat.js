@@ -99,6 +99,7 @@ const Chat = () => {
         <Text style={styles.title}> Symposium (Subject) </Text>
       </View>
       <FlatList
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         data={messages}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
