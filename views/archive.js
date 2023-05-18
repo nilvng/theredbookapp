@@ -58,12 +58,7 @@ export default function Archive({ navigation }) {
                 }}>
 
                 <View style={styles.modalView}>
-                    <DetailedModal symposium={currentData} />
-
-                    <View style={styles.modalButton}>
-                        <Button style={styles.button} title="Back" color="white"
-                            onPress={() => setModalVisible(!modalVisible)} />
-                    </View>
+                    <DetailedModal symposium={currentData} backButtonPressed = {setModalVisible} />
                 </View>
             </Modal>
 
