@@ -18,6 +18,9 @@ function Home({ navigation }) {
             <Button style={styles.button} title="Chat" color="red"
                 onPress={() => navigation.navigate('Chat')}
             />
+            <Button style={styles.button} title="Authentication" color="orange"
+                onPress={() => navigation.navigate('Authentication')}
+            />
         </VStack>
     );
 }
