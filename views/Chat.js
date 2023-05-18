@@ -27,13 +27,13 @@ const Chat = () => {
           onPress={() => handleVote(item.id, 'upvote')}
           disabled={voteStatus[item.id] === 'upvote'}
         >
-          <Text style={styles.voteText}>↑ {item.upvotes}</Text>
+          <MaterialCommunityIcons name="thumb-up" size={12}/>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleVote(item.id, 'downvote')}
           disabled={voteStatus[item.id] === 'downvote'}
         >
-          <Text style={styles.voteText}>↓ {item.downvotes}</Text>
+          <MaterialCommunityIcons name="thumb-down" size={12}/>
         </TouchableOpacity>
       </View>
     </View>
@@ -83,7 +83,7 @@ const Chat = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleGoBack} style={styles.button}>
-        <MaterialCommunityIcons name="arrow-left" size={24} color="white" />
+        <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
       </TouchableOpacity>
       <FlatList
         data={messages}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop:75,
     flex: 1,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#AFEEEE', 
   },
   messageContainer: {
     flexDirection: 'row',
@@ -116,15 +116,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '17%',
+    width: '15%',
+
   },
   voteText: {
     fontSize: 15,
     color: '#0a0a0a',
-    marginHorizontal: 5,
+    marginHorizontal: 10,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: '#F3EED9',
     borderRadius: 5,
     padding: 5,
     margin: 10,
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
   },
