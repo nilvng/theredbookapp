@@ -11,10 +11,10 @@ export default function AuthenticationScreen({ navigation }) {
         navigation.navigate('Registration')
     }
 
-    const onLoginPress = () => {
+    const onRegisterPress = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then((response) => {
-                console.log("Registration response: " + response)
+                console.log("Registration response: " + response.user)
                 navigation.navigate('Archive')
             })
     }
@@ -45,11 +45,11 @@ export default function AuthenticationScreen({ navigation }) {
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => onLoginPress()}>
-                <Text style={styles.buttonTitle}>Log in</Text>
+                onPress={() => onRegisterPress()}>
+                <Text style={styles.buttonTitle}>Register account</Text>
             </TouchableOpacity>
             <View style={styles.footerView}>
-                <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                <Text style={styles.footerText}>Have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign in</Text></Text>
             </View>
         </View>
     )
