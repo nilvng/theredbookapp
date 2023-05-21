@@ -4,6 +4,7 @@ import Message from '../Chat/Message';
 import InputBox from '../Chat/InputBox';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import VoteView from '../Chat/VoteView';
+import { StackActions } from '@react-navigation/native';
 
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
@@ -12,7 +13,7 @@ const initialMessages = [
   { id: 4, content: 'This is a test message', upvotes: 0, downvotes: 0 },
 ];
 
-const Chat = ({ title }) => {
+const Chat = ({ title, navigation }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [voteStatus, setVoteStatus] = useState({});
 
