@@ -4,7 +4,7 @@ import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
 import { getAll } from '../Symposium/Models/symposium-db.js';
-import DetailedModal from './detailedView';
+import DetailedModal from './DetailModal';
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -23,6 +23,11 @@ export default function Archive({ navigation }) {
         }
     }, []);
 
+    const onItemPress = (item) => {
+        setData(item);
+        navigation.navigate("Detail", { symposium: item });
+    }
+
     useEffect(() => {
         loadData();
     }, [loadData]);
@@ -37,7 +42,7 @@ export default function Archive({ navigation }) {
                 style={{ width: '94%' }}
                 data={currentSymposiums}
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
+                    <TouchableOpacity onPress={() => { onItemPress(item) }}>
                         <Card data={item} />
                     </TouchableOpacity>)}
                 ItemSeparatorComponent={<Separator />}
@@ -48,20 +53,6 @@ export default function Archive({ navigation }) {
 
     return (
         <View style={styles.container}>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}>
-
-                <View style={styles.modalView}>
-                    <DetailedModal symposium={currentData} backButtonPressed={setModalVisible} navigation={navigation} />
-                </View>
-            </Modal>
-
             <HStack>
                 <Text style={styles.title}>Archive</Text>
             </HStack>

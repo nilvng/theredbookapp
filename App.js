@@ -11,6 +11,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { createTable, getAll } from './Symposium/Models/symposium-db';
 import Home from './views/home';
 import AuthenticationScreen from './views/AuthenticationScreen';
+import DetailedModal from './views/DetailModal';
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,11 @@ export default function App() {
           name='Create'
           options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
           {props => <CreateModal {...props} space={testData} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name='Detail'
+          options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
+          {props => <DetailedModal {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
