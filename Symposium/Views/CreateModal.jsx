@@ -14,12 +14,9 @@ const CreateModal = ({ navigation, space }) => {
     const [selectedTopics, setSelectedTopics] = useState([]);
     const [subject, setSubject] = useState("");
     const [datePicker, setDatePicker] = useState(false);
-
     const [date, setDate] = useState(new Date());
-
+    const [time] = useState(new Date(Date.now()));
     const [timePicker, setTimePicker] = useState(false);
-
-    const [time, setTime] = useState(new Date(Date.now()));
 
     function showDatePicker() {
         setDatePicker(true);
@@ -62,7 +59,7 @@ const CreateModal = ({ navigation, space }) => {
             title: subject,
             topic: selectedTopics.toString(),
             host: selectedSpeakers.toString(),
-            startDate: Date().toString(),
+            startDate: date.toString(),
         }
         if (subject != "") {
             await insert(item)
@@ -112,31 +109,35 @@ const CreateModal = ({ navigation, space }) => {
                             </Button>
                         )} />
 
-                    {datePicker && (
-                        <DateTimePicker
-                            value={date}
-                            mode={'date'}
-                            is24Hour={true}
-                            onChange={onDateSelected}
-                        />
+                    {(Platform.OS === 'ios' || datePicker) && (
+                        <View style={styles.schedulePicker}>
+                            <DateTimePicker
+                                value={date}
+                                mode={'date'}
+                                is24Hour={true}
+                                onChange={onDateSelected}
+                            />
+                        </View>
                     )}
 
-                    {timePicker && (
-                        <DateTimePicker
-                            value={time}
-                            mode={'time'}
-                            is24Hour={false}
-                            onChange={onTimeSelected}
-                        />
+                    {(Platform.OS === 'ios' || timePicker) && (
+                        <View style={styles.schedulePicker}>
+                            <DateTimePicker
+                                value={time}
+                                mode={'time'}
+                                is24Hour={false}
+                                onChange={onTimeSelected}
+                            />
+                        </View>
                     )}
 
-                    {!datePicker && (
+                    {Platform.OS !== 'ios' && !datePicker && (
                         <View style={{ margin: 10 }}>
                             <Button onPress={showDatePicker}>Select Date</Button>
                         </View>
                     )}
 
-                    {!timePicker && (
+                    {Platform.OS !== 'ios' && !timePicker && (
                         <View style={{ margin: 10 }}>
                             <Button onPress={showTimePicker}>Select Time</Button>
                         </View>
@@ -229,7 +230,11 @@ const styles = StyleSheet.create({
         width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 12,
         backgroundColor: '#FFF4F1', elevation: 5, shadowOffset: { width: 0, height: -4 },
         paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
-    }
+    },
+    schedulePicker: {
+        alignItems: 'left',
+        marginVertical: 5,
+    },
 });
 
 export default CreateModal;
