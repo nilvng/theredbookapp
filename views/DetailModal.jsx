@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
 
-function DetailedModal({ symposium, backButtonPressed, navigation }) {
+function DetailedModal({ route, navigation }) {
+  const { symposium } = route.params;
 
   const handleChatPressed = () => {
-    backButtonPressed(false);
     navigation.navigate("Chat");
+  }
+
+  const routeBack = () => {
+    navigation.goBack();
   }
 
   return (
@@ -18,10 +22,10 @@ function DetailedModal({ symposium, backButtonPressed, navigation }) {
         icon="close"
         color="#1E1E1E"
         size={24}
-        onPress={() => backButtonPressed(false)} />
+        onPress={routeBack} />
       <View style={styles.center}>
         <Text style={styles.title}>{symposium.title}</Text>
-        <Text style={styles.subtitle}>Business - IT - AI</Text>
+        <Text style={styles.subtitle}>{symposium.topic}</Text>
       </View>
       <View style={{ marginHorizontal: 12 }}>
         <Text style={styles.head1}>Speaker</Text>
@@ -51,11 +55,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   modalView: {
-    backgroundColor: "#F3EED9",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    flex: 1,
-    color: '#FFF4F1',
+    height: '50%',
+    marginTop: 'auto',
+    backgroundColor: '#FFF4F1',
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.85,
+    shadowRadius: 10,
+    elevation: 5,
+    overflow: 'hidden',
+    alignContent: 'flex-end',
   },
   center: {
     display: "flex",
@@ -72,22 +82,16 @@ const styles = StyleSheet.create({
     color: "#1E1E1E",
     fontWeight: 'bold',
     fontSize: 25,
-    marginTop: 10,
   },
   head1: {
     color: "#1E1E1E",
     fontWeight: 'bold',
     fontSize: 18,
-    marginTop: 10,
+    marginVertical: 10,
   },
   subtitle: {
     color: "#1E1E1E",
     fontSize: 16,
-    marginTop: 10,
-  },
-  text: {
-    color: "#1E1E1E",
-    fontSize: 24,
     marginTop: 10,
   },
   buttonContainer: {
