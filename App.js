@@ -1,6 +1,5 @@
 import React from 'react';
 import Chat from './views/Chat';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Archive from './views/archive';
 import IncomingCall, { testData } from './views/incomingCall';
@@ -12,11 +11,13 @@ import { createTable, getAll } from './Symposium/Models/symposium-db';
 import Home from './views/home';
 import AuthenticationScreen from './views/AuthenticationScreen';
 import DetailedModal from './views/DetailModal';
+import { UserContext } from './Contexts';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [spaces, setSpace] = useState([])
+  const userState = useState(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -36,38 +37,40 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerShown: false
-      }}>
-        <Stack.Screen
-          name="Authentication"
-          component={AuthenticationScreen} />
-        <Stack.Screen
-          name="Home"
-          component={Home} />
-        <Stack.Screen
-          name="Call"
-          component={IncomingCall}
-        />
-        <Stack.Screen
-          name="Archive"
-          component={Archive}
-        />
-        <Stack.Screen
-          name="Chat"
-          component={Chat} />
-        <Stack.Screen
-          name='Create'
-          options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
-          {props => <CreateModal {...props} space={testData} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name='Detail'
-          options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
-          {props => <DetailedModal {...props} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+      <UserContext.Provider value={userState}>
+        <Stack.Navigator screenOptions={{
+          headerShown: false
+        }}>
+          <Stack.Screen
+            name="Authentication"
+            component={AuthenticationScreen} />
+          <Stack.Screen
+            name="Home"
+            component={Home} />
+          <Stack.Screen
+            name="Call"
+            component={IncomingCall}
+          />
+          <Stack.Screen
+            name="Archive"
+            component={Archive}
+          />
+          <Stack.Screen
+            name="Chat"
+            component={Chat} />
+          <Stack.Screen
+            name='Create'
+            options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
+            {props => <CreateModal {...props} space={testData} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name='Detail'
+            options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
+            {props => <DetailedModal {...props} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </UserContext.Provider>
+    </NavigationContainer >
   );
 }
 
