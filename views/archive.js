@@ -58,7 +58,7 @@ export default function Archive({ navigation }) {
                 }}>
 
                 <View style={styles.modalView}>
-                    <DetailedModal symposium={currentData} backButtonPressed = {setModalVisible} />
+                    <DetailedModal symposium={currentData} backButtonPressed={setModalVisible} navigation={navigation} />
                 </View>
             </Modal>
 

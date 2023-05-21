@@ -4,7 +4,12 @@ import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
 
-function DetailedModal({ symposium, backButtonPressed }) {
+function DetailedModal({ symposium, backButtonPressed, navigation }) {
+
+  const handleChatPressed = () => {
+    backButtonPressed(false);
+    navigation.navigate("Chat");
+  }
 
   return (
     <View style={styles.modalView}>
@@ -22,9 +27,6 @@ function DetailedModal({ symposium, backButtonPressed }) {
         <Text style={styles.head1}>Speaker</Text>
         <HStack>
           <AvatarName name={symposium.host} />
-          {/* <AvatarName name={"Crystal"} />
-          <AvatarName name={"Jeremy C"} /> */}
-
         </HStack>
       </View>
 
@@ -34,7 +36,7 @@ function DetailedModal({ symposium, backButtonPressed }) {
           flexGrow: 1,
           justifyContent: 'center',
         }} title="Join" color="purple" />
-        <IconButton icon="chat" color="#1E1E1E" size={24} />
+        <IconButton icon="chat" color="#1E1E1E" size={24} onPress={handleChatPressed} />
       </HStack>
     </View >
 
@@ -90,6 +92,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "100%", position: 'absolute', bottom: 0, paddingHorizontal: 12,
-    paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
+    paddingVertical: 10,
   }
 });
