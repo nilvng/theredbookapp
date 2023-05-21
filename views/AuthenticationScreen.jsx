@@ -1,58 +1,107 @@
-import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
-import { default as styles } from '../styles/Authentication';
+import React, { useContext, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { auth } from '../firebase.config';
+import { Box, Button, Spacer, Surface, TextInput, VStack } from '@react-native-material/core';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { UserContext } from '../Contexts';
+
 
 export default function AuthenticationScreen({ navigation }) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("s3779569@student.rmit.edu.au")
+  const [password, setPassword] = useState("")
+  const [isLogin, setIsLogin] = useState(true)
 
-    const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
+  const [user, setUser] = useContext(UserContext);
+
+  const handleLogin = () => {
+    let authPassword = password;
+    if (authPassword == "") {
+      authPassword = "TestPassword123*";
     }
-
-    const onRegisterPress = () => {
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                console.log("Registration response: " + response.user)
-                navigation.navigate('Archive')
-            })
+    if (!isLogin) {
+      setUser(auth.createUserWithEmailAndPassword(email, authPassword)
+        .then((response) => {
+          console.log("Register response: " + JSON.stringify(response.user))
+          setUser(response.user)
+          navigation.navigate('Home');
+        }));
+    } else {
+      setUser(auth.signInWithEmailAndPassword(email, authPassword)
+        .catch((error) => {
+          console.log("Login error: " + JSON.stringify(error))
+        }).then((response) => {
+          console.log("Login response: " + JSON.stringify(response.user))
+          setUser(response.user)
+          navigation.navigate('Home');
+        }));
     }
+  }
 
-    return (
-        <View style={{ flex: 1, width: '100%' }}>
-            <Image
-                style={styles.logo}
-                source={require('../assets/redbook_logo.png')}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder='E-mail'
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-            />
-            <TextInput
-                style={styles.input}
-                placeholderTextColor="#aaaaaa"
-                secureTextEntry
-                placeholder='Password'
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-            />
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => onRegisterPress()}>
-                <Text style={styles.buttonTitle}>Register account</Text>
-            </TouchableOpacity>
-            <View style={styles.footerView}>
-                <Text style={styles.footerText}>Have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign in</Text></Text>
-                <Button title="Go home (Dev)" onPress={() => navigation.navigate('Home')} />
-            </View>
-        </View>
-    )
+  const handleSwitch = () => {
+    setIsLogin(!isLogin);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Spacer />
+      <Surface style={styles.surface}
+        elevation={4}
+        category="medium"
+        padding={40}
+      >
+        <VStack>
+          <Text style={styles.title}>Redbook</Text>
+          <Box>
+            <TextInput style={styles.textBox} label="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
+            <TextInput style={styles.textBox} textContentType="password" label="Password" onChangeText={text => setPassword(text)} leading={props => <Icon name="lock" {...props} />} />
+            <Button style={styles.button} title={isLogin ? "Login" : "Register"} color="pink" onPress={handleLogin} />
+            <Button variant="text" title={isLogin ? "Register" : "Login"} color="white" onPress={handleSwitch} />
+          </Box>
+        </VStack>
+
+      </Surface>
+      <Spacer />
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({
+  surface: {
+    backgroundColor: "#4353535",
+    color: '#FFFFFF',
+    width: 300,
+    height: 360,
+  },
+  textBox: {
+    marginTop: 16,
+  },
+  title: {
+    fontSize: 32,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    paddingBottom: 16,
+  },
+  button: {
+    padding: 2,
+    marginTop: 24,
+  },
+  platform: {
+    backgroundColor: "transparent",
+    alignSelf: 'stretch',
+    borderColor: "transparent",
+    borderBottomWidth: 1,
+    borderBottomColor: "#404040",
+    borderLeftWidth: 20,
+    borderRightWidth: 20,
+    marginHorizontal: 5,
+    marginTop: 28,
+    zIndex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#303030',
+    color: '#FFFFFF',
+    alignItems: 'center',
+    paddingVertical: 50,
+  },
+});
