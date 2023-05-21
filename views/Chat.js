@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
-import Message from '../components/Message';
-import InputBox from '../components/InputBox';
-import { Button as ButtonPaper } from 'react-native-paper';
+import Message from '../Chat/Message';
+import InputBox from '../Chat/InputBox';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import VoteView from '../Chat/VoteView';
 
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
@@ -12,7 +12,7 @@ const initialMessages = [
   { id: 4, content: 'This is a test message', upvotes: 0, downvotes: 0 },
 ];
 
-const Chat = () => {
+const Chat = ({ title }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [voteStatus, setVoteStatus] = useState({});
 
@@ -20,31 +20,7 @@ const Chat = () => {
     <View style={styles.messageContainer}>
       <View style={styles.message}>
         <Message content={item.content} />
-      </View>
-      <View style={styles.voteContainer}>
-        <ButtonPaper
-          icon="thumb-up"
-          buttonColor='#F3EED9'
-          textColor='black'
-          onPress={() => handleVote(item.id, 'upvote')}
-          labelStyle={{ fontSize: 12 }}
-          style={{ height: 38 }}
-        >
-          <Text style={{ fontSize: 12 }}>{item.upvotes}</Text>
-        </ButtonPaper>
-
-        <View style={{ width: 10 }} />
-
-        <ButtonPaper
-          icon="thumb-down"
-          buttonColor='#F3EED9'
-          textColor='black'
-          onPress={() => handleVote(item.id, 'downvote')}
-          labelStyle={{ fontSize: 12 }}
-          style={{ height: 38 }}
-        >
-          <Text style={{ fontSize: 12 }}>{item.downvotes}</Text>
-        </ButtonPaper>
+        <VoteView item={item} onVote={handleVote} voteStatus={voteStatus} />
       </View>
     </View>
   );
@@ -96,7 +72,7 @@ const Chat = () => {
         <TouchableOpacity onPress={handleGoBack} style={styles.button}>
           <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.title}> Symposium (Subject) </Text>
+        <Text style={styles.title}> Symposium (title) </Text>
       </View>
       <FlatList
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
@@ -140,19 +116,6 @@ const styles = StyleSheet.create({
   message: {
     width: '100%',
     alignSelf: 'center',
-  },
-
-  voteContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: '0%',
-
-  },
-  voteText: {
-    fontSize: 15,
-    color: 'black',
-    marginHorizontal: 10,
   },
   button: {
     backgroundColor: '#F3EED9',
