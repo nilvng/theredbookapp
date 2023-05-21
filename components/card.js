@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     cardTitle: {
-        fontSize: 15,
+        fontSize: 24,
         paddingLeft: 10,
         alignSelf: 'baseline',
     },

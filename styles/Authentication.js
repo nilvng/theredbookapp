@@ -5,15 +5,11 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
-    title: {
-
-    },
     logo: {
         flex: 1,
-        height: 120,
-        width: 90,
+        marginTop: 20,
+        resizeMode: 'contain',
         alignSelf: "center",
-        margin: 30
     },
     input: {
         height: 48,

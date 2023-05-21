@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import { default as styles } from '../styles/Authentication';
 import { auth } from '../firebase.config';
 
@@ -23,6 +23,7 @@ export default function AuthenticationScreen({ navigation }) {
         <View style={{ flex: 1, width: '100%' }}>
             <Image
                 style={styles.logo}
+                source={require('../assets/redbook_logo.png')}
             />
             <TextInput
                 style={styles.input}
@@ -50,6 +51,7 @@ export default function AuthenticationScreen({ navigation }) {
             </TouchableOpacity>
             <View style={styles.footerView}>
                 <Text style={styles.footerText}>Have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign in</Text></Text>
+                <Button title="Go home (Dev)" onPress={() => navigation.navigate('Home')} />
             </View>
         </View>
     )
