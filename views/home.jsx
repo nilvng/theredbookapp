@@ -4,6 +4,7 @@ import { testData } from "../helpers/formatSelection";
 import React, { useContext } from 'react';
 import { Button, Text, VStack } from "@react-native-material/core";
 import { UserContext } from "../Contexts";
+import { auth } from "../firebase.config";
 
 function Home({ navigation }) {
     const [user, setUser] = useContext(UserContext);
@@ -18,6 +19,13 @@ function Home({ navigation }) {
                 />
                 <Button style={styles.button} title="Create" color="green"
                     onPress={() => navigation.navigate('Create')}
+                />
+                <Button style={styles.button} title="Logout" color="pink"
+                    onPress={() => {
+                        setUser(null)
+                        auth.signOut()
+                        navigation.navigate('Authentication')
+                    }}
                 />
             </VStack>
 
