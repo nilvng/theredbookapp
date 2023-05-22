@@ -4,7 +4,10 @@ export const getSpeakers = (speakerIdsString) => {
     let speakers = speakerIdsString.split(",");
     let speakerObjects = [];
     for (let i = 0; i < speakers.length; i++) {
-        speakerObjects.push(testData.speakers.find(speaker => speaker.id == speakers[i]));
+        let found = testData.speakers.find(speaker => speaker.id == speakers[i]);
+        if (found != null) {
+            speakerObjects.push(testData.speakers.find(speaker => speaker.id == speakers[i]).name);
+        }
     }
     return speakerObjects.join(", ");
 }
