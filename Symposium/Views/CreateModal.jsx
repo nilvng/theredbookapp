@@ -7,7 +7,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
 
-const topicList = ["Entertainment", "Politics", "IT", "Business"]
+export const topicList = ["Entertainment", "Politics", "IT", "Business"]
 
 const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
@@ -17,7 +17,7 @@ const CreateModal = ({ navigation, space }) => {
     const handleOnPressSpeaker = (index) => {
         var updated = [...selectedSpeakers];
         if (selectedSpeakers.includes(index)) {
-            updated = selectedSpeakers.filter((item) => item !== index)
+            updated = selectedSpeakers.filter((item) => item !== index) // unselect one already seletected
         } else {
             updated.push(index)
         }
@@ -35,8 +35,8 @@ const CreateModal = ({ navigation, space }) => {
     const handleOnPressSubmit = async () => {
         const item = {
             title: subject,
-            topic: "test",
-            host: "selectedSpeakers",
+            topic: selectedTopics.toString(),
+            host: selectedSpeakers.toString(),
             startDate: Date().toString(),
         }
         if (subject != "") {
