@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import React from 'react';
 import { Button, HStack, VStack } from "@react-native-material/core";
 import LiveView from "../Symposium/Views/LiveView";
-import { testData } from "./incomingCall";
+import { testData } from "../helpers/formatSelection";
 
 function Home({ navigation }) {
     return (
