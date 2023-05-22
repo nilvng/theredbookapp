@@ -55,6 +55,7 @@ export default function AuthenticationScreen({ navigation }) {
           <Text style={styles.title}>Redbook</Text>
           <Box>
             <TextInput style={styles.textBox}
+              autoCapitalize='none'
               placeholder="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
             <TextInput style={styles.textBox}
               secureTextEntry={secureTextEntry}
