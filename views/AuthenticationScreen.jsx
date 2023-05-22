@@ -16,6 +16,7 @@ export default function AuthenticationScreen({ navigation }) {
 
   const handleLogin = () => {
     let authPassword = password;
+    setError("")
     // if (authPassword == "") {
     //   authPassword = "TestPassword123*";
     // }
@@ -29,6 +30,7 @@ export default function AuthenticationScreen({ navigation }) {
     } else {
       setUser(auth.signInWithEmailAndPassword(email, authPassword)
         .catch((error) => {
+          setError(error.message)
           console.log("Login error: " + JSON.stringify(error))
         }).then((response) => {
           console.log("Login response: " + JSON.stringify(response.user))
@@ -61,6 +63,7 @@ export default function AuthenticationScreen({ navigation }) {
               onChangeText={text => setPassword(text)}
               leading={props => <Icon name="lock" {...props} />}
               trailing={props => <Icon name={secureTextEntry ? "eye" : "eye-off"} {...props} onPress={() => setSecureTextEntry(!secureTextEntry)} />} />
+            {error != "" ? <Text style={{ color: "red" }}>{error}</Text> : null}
             <Button style={styles.button} title={isLogin ? "Login" : "Register"} color="pink" onPress={handleLogin} />
             <Button variant="text" title={isLogin ? "Register" : "Login"} color="white" onPress={handleSwitch} />
           </Box>
