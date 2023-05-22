@@ -6,6 +6,7 @@ import { Button as Rbutton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
+import { topicList } from '../../helpers/formatSelection';
 
 const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
