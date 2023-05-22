@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
-
+import { getSpeakers, getTopicsNameString } from "../helpers/formatSelection";
 function DetailedModal({ route, navigation }) {
   const { symposium } = route.params;
 
@@ -25,12 +25,16 @@ function DetailedModal({ route, navigation }) {
         onPress={routeBack} />
       <View style={styles.center}>
         <Text style={styles.title}>{symposium.title}</Text>
-        <Text style={styles.subtitle}>{symposium.topic}</Text>
+        <Text style={styles.subtitle}>{getTopicsNameString(symposium.topic)}</Text>
       </View>
       <View style={{ marginHorizontal: 12 }}>
         <Text style={styles.head1}>Speaker</Text>
         <HStack>
-          <AvatarName name={symposium.host} />
+          {
+            getSpeakers(symposium.host).map((speaker) => (
+              <AvatarName name={speaker.name} />
+            ))
+          }
         </HStack>
       </View>
 
