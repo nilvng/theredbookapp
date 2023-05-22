@@ -8,24 +8,18 @@ function Home({ navigation }) {
     return (
         <View style={styles.container}>
             <VStack style={styles.container} items="center" justify="center" spacing={12}>
+
                 <Button style={styles.button} title="Archive" color="purple"
                     onPress={() => navigation.navigate('Archive')}
                 />
                 <Button style={styles.button} title="Create" color="green"
                     onPress={() => navigation.navigate('Create')}
                 />
-                <Button style={styles.button} title="Incoming Call" color="blue"
-                    onPress={() => navigation.navigate('Call')}
-                />
-                <Button style={styles.button} title="Chat" color="red"
-                    onPress={() => navigation.navigate('Chat')}
-                />
-                <Button style={styles.button} title="Authentication" color="orange"
-                    onPress={() => navigation.navigate('Authentication')}
-                />
             </VStack>
-            <LiveView symposium={testData} />
+
+            <LiveView style={{ width: "80%" }} symposium={testData} />
         </View>
+
     );
 }
 const styles = StyleSheet.create({
@@ -33,7 +27,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        padding: 4
+        width: "80%",
+        height: 50,
+        justifyContent: "center",
     },
 })
 
