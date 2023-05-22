@@ -80,8 +80,10 @@ const styles = StyleSheet.create({
   surface: {
     backgroundColor: "#4353535",
     color: '#FFFFFF',
-    width: 300,
-    height: 360,
+    alignSelf: 'stretch',
+    paddingHorizontal: 16,
+    paddingVertical: 36,
+    marginHorizontal: 16,
   },
   textBox: {
     marginTop: 16,
