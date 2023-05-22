@@ -10,7 +10,8 @@ export default function AuthenticationScreen({ navigation }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true)
-
+  const [error, setError] = useState("")
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
   const [user, setUser] = useContext(UserContext);
 
   const handleLogin = () => {
@@ -51,8 +52,15 @@ export default function AuthenticationScreen({ navigation }) {
         <VStack>
           <Text style={styles.title}>Redbook</Text>
           <Box>
-            <TextInput style={styles.textBox} label="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
-            <TextInput style={styles.textBox} secureTextEntry textContentType="password" label="Password" onChangeText={text => setPassword(text)} leading={props => <Icon name="lock" {...props} />} />
+            <TextInput style={styles.textBox}
+              placeholder="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
+            <TextInput style={styles.textBox}
+              secureTextEntry={secureTextEntry}
+              textContentType="password"
+              placeholder='Password'
+              onChangeText={text => setPassword(text)}
+              leading={props => <Icon name="lock" {...props} />}
+              trailing={props => <Icon name={secureTextEntry ? "eye" : "eye-off"} {...props} onPress={() => setSecureTextEntry(!secureTextEntry)} />} />
             <Button style={styles.button} title={isLogin ? "Login" : "Register"} color="pink" onPress={handleLogin} />
             <Button variant="text" title={isLogin ? "Register" : "Login"} color="white" onPress={handleSwitch} />
           </Box>
