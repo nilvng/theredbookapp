@@ -7,7 +7,7 @@ import { UserContext } from '../Contexts';
 
 
 export default function AuthenticationScreen({ navigation }) {
-  const [email, setEmail] = useState("s3779569@student.rmit.edu.au")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true)
 
@@ -15,9 +15,9 @@ export default function AuthenticationScreen({ navigation }) {
 
   const handleLogin = () => {
     let authPassword = password;
-    if (authPassword == "") {
-      authPassword = "TestPassword123*";
-    }
+    // if (authPassword == "") {
+    //   authPassword = "TestPassword123*";
+    // }
     if (!isLogin) {
       setUser(auth.createUserWithEmailAndPassword(email, authPassword)
         .then((response) => {
@@ -47,13 +47,12 @@ export default function AuthenticationScreen({ navigation }) {
       <Surface style={styles.surface}
         elevation={4}
         category="medium"
-        padding={40}
       >
         <VStack>
           <Text style={styles.title}>Redbook</Text>
           <Box>
             <TextInput style={styles.textBox} label="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
-            <TextInput style={styles.textBox} textContentType="password" label="Password" onChangeText={text => setPassword(text)} leading={props => <Icon name="lock" {...props} />} />
+            <TextInput style={styles.textBox} secureTextEntry textContentType="password" label="Password" onChangeText={text => setPassword(text)} leading={props => <Icon name="lock" {...props} />} />
             <Button style={styles.button} title={isLogin ? "Login" : "Register"} color="pink" onPress={handleLogin} />
             <Button variant="text" title={isLogin ? "Register" : "Login"} color="white" onPress={handleSwitch} />
           </Box>
