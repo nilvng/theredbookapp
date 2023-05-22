@@ -7,8 +7,6 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
 
-export const topicList = ["Entertainment", "Politics", "IT", "Business"]
-
 const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
     const [selectedTopics, setSelectedTopics] = useState([]);

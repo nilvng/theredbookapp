@@ -2,10 +2,10 @@ import { HStack } from '@react-native-material/core';
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import { getSpeakers, getTopics } from '../helpers/formatSelection';
+import { getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
 export default function Card({ data }) {
     const TextStackView = <View style={styles.textStack}>
-        <Text style={styles.hostText}> {getSpeakers(data.host)} hosted</Text>
+        <Text style={styles.hostText}> {getSpeakersNameString(data.host)} hosted</Text>
         {data.startDate != null ? <Text style={styles.text}>{data.startDate}</Text> : null}
     </View>;
     return (
@@ -13,7 +13,7 @@ export default function Card({ data }) {
             <View style={styles.cardContent}>
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}> {data.title}</Text>
-                    <Text style={styles.footerText}> {getTopics(data.topic)}</Text>
+                    <Text style={styles.footerText}> {getTopicsNameString(data.topic)}</Text>
                 </View>
                 <View style={styles.detailContainer}>
                     <HStack>
