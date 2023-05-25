@@ -5,6 +5,22 @@ import InputBox from '../Chat/InputBox';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
+import { initializeApp } from '@firebase/app';
+import { getFirestore } from '@firebase/firestore';
+import { addDoc, collection, onSnapshot } from '@firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAzu1mjzrOqKX-0MROl-kOicR6NhpttvZ8",
+  authDomain: "redbookapp-412c2.firebaseapp.com",
+  projectId: "redbookapp-412c2",
+  storageBucket: "redbookapp-412c2.appspot.com",
+  messagingSenderId: "13215877824",
+  appId: "1:13215877824:web:7412a57acdc17b6b8c7b25",
+  measurementId: "G-T76LCBQY4N"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
@@ -17,6 +33,18 @@ const Chat = ({ title, navigation }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [voteStatus, setVoteStatus] = useState({});
 
+  React.useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'messages'), (snapshot) => {
+      const firebaseMessages = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setMessages(firebaseMessages);
+    });
+  
+    // Clean up function
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
       <View style={styles.message}>
@@ -26,13 +54,21 @@ const Chat = ({ title, navigation }) => {
     </View>
   );
 
-  const handleSendMessage = (content) => {
+  const handleSendMessage = async (content) => {
     const newMessage = {
       id: messages.length + 1,
       content,
       upvotes: 0,
       downvotes: 0,
     };
+
+    try {
+      await addDoc(collection(db, 'messages'), newMessage);
+    } catch (error) {
+      console.error("Error writing new message to Firestore", error);
+      return; // exit the function early if there's an error
+    }
+
     setMessages([...messages, newMessage]);
   };
 
