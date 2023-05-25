@@ -1,25 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
-import { VStack, Button, HStack } from "@react-native-material/core";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
-import { getAll } from '../Symposium/Models/symposium-db.js';
-import DetailedModal from './DetailModal';
+import { getSymposiums } from '../Symposium/Models/firestore-helper';
 
 export default function Archive({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [pressed, setPressed] = useState(false);
-    const [currentData, setData] = useState("")
     const [currentSymposiums, setSymposiums] = useState();
 
     const loadData = useCallback(async () => {
         try {
-            getAll().then((data) => {
-                console.log(data);
+            getSymposiums().then((data) => {
                 setSymposiums(data);
             })
         } catch (error) {
-            console.log(error);
+            console.log("Archive error:" + error);
         }
     }, []);
 
