@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Message from '../components/Message';
 import InputBox from '../components/InputBox';
 import { Button as ButtonPaper } from 'react-native-paper';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
 const initialMessages = [
   { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
@@ -45,7 +46,7 @@ const Chat = () => {
           labelStyle={{ fontSize: 12 }}
           style={{ height: 38 }}
         >
-          {item.downvotes}
+          <Text style={{ fontSize: 12 }}>{item.downvotes}</Text>
         </ButtonPaper>
       </View>
     </View>
@@ -89,7 +90,7 @@ const Chat = () => {
   };
 
   const handleGoBack = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.pop(1));
   };
 
   return (
@@ -101,6 +102,7 @@ const Chat = () => {
         <Text style={styles.title}> Symposium (Subject) </Text>
       </View>
       <FlatList
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         data={messages}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}

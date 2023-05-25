@@ -1,53 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import { VStack, Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
-
-const symposiums = [
-    { category: 'podcasts', data: dummyPodcasts },
-]
-
-const dummyPodcasts = [
-    { title: 'Podcast #1', description: 'Welcome to our podcast!', host: 'Nick' },
-    { title: 'Podcast #2', description: 'Heated discussion with the hosts', host: 'Nick' },
-    { title: 'Podcast #3', description: 'Viewer Q&A', host: 'Nick' },
-    { title: 'Dummy Podcast 1', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 2', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 3', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 4', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 5', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 6', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 7', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 8', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 9', description: 'Dummy podcast', host: 'Nick' },
-    { title: 'Dummy Podcast 10', description: 'Dummy podcast', host: 'Nick' }
-]
-
-const dummyDiscussions = [
-    { title: 'Ex-Amazon workers, share you experiences!', description: 'Discussion on prior experiences of amazon warehouse workers' },
-    { title: 'Crunch time in the game-dev industry?', description: 'Discussion on what can be done about crunch time in the game development industry' },
-]
-
-
+import { getAll } from '../Symposium/Models/symposium-db.js';
+import DetailedModal from './detailedView';
 
 export default function Archive({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [pressed, setPressed] = useState(false);
     const [currentData, setData] = useState("")
+    const [currentSymposiums, setSymposiums] = useState();
+
+    const loadData = useCallback(async () => {
+        try {
+            getAll().then((data) => {
+                console.log(data);
+                setSymposiums(data);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
 
     const Separator = () => {
         return <View style={styles.separator} />;
     };
 
-    const renderHeader = (header) => {
+    const SymposiumList = () => {
         return (
-            <View>
-                <Text style={styles.sectionHeader}>{header}</Text>
-                <Separator />
-            </View>
+            <FlatList
+                style={{ width: '94%' }}
+                data={currentSymposiums}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
+                        <Card data={item} />
+                    </TouchableOpacity>)}
+                ItemSeparatorComponent={<Separator />}
+            />
         )
     }
+
 
     return (
         <View style={styles.container}>
@@ -61,13 +58,10 @@ export default function Archive({ navigation }) {
                 }}>
 
                 <View style={styles.modalView}>
-                    <View style={styles.container}>
-                        <Text style={styles.modalTitle}>{currentData.title}</Text>
-                        <Text>{currentData.description}</Text>
-                    </View>
+                    <DetailedModal symposium={currentData} />
 
-                    <View>
-                        <Button style={styles.button} title="Back" color="purple"
+                    <View style={styles.modalButton}>
+                        <Button style={styles.button} title="Back" color="white"
                             onPress={() => setModalVisible(!modalVisible)} />
                     </View>
                 </View>
@@ -77,23 +71,7 @@ export default function Archive({ navigation }) {
                 <Text style={styles.title}>Archive</Text>
             </HStack>
 
-            <FlatList
-                style={{ width: '95%' }}
-                data={dummyPodcasts}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => { setPressed(!pressed); setModalVisible(!modalVisible); setData(item) }}>
-                        <Card>
-                            <View style={styles.cardTitleContainer}>
-                                <Text style={styles.cardTitle}> {item.title}</Text>
-                            </View>
-                            <View style={styles.cardHostContainer}>
-                                <Text style={styles.cardHost}> {item.host}</Text>
-                            </View>
-                        </Card>
-                    </TouchableOpacity>)}
-                ItemSeparatorComponent={<Separator />}
-                ListHeaderComponent={renderHeader('Podcasts')}
-            />
+            <SymposiumList />
 
 
             <HStack>
@@ -141,36 +119,34 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         color: 'white'
     },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: '#F3EED9',
+        color: '#FFFFFF',
+        alignItems: 'center',
+        paddingVertical: 25,
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+    },
     modalView: {
         flex: 1,
-        paddingTop: '60%',
-        height: '40%',
+        paddingTop: '70%',
+        height: '30%',
+        color: '#FFF4F1',
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
+    },
+    modalButton: {
+        color: 'black',
+        backgroundColor: 'white',
     },
     separator: {
         height: 10,
         width: '100%',
     },
-    cardTitleContainer: {
-        flexGrow: 1,
-    },
-    cardTitle: {
-        fontSize: 15,
-        paddingLeft: 10,
-        alignSelf: 'baseline',
-    },
-    cardHostContainer: {
-        height: '30%',
-        borderRadius: 10,
-        backgroundColor: '#F3EED9',
-    },
-    cardHost: {
-        paddingHorizontal: 10,
 
-    },
 });
