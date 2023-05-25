@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, View, KeyboardAvoidingView, Keyboard, FlatList, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { Stack, TextInput, IconButton, HStack } from "@react-native-material/core";
-import { Button as Rbutton } from "@react-native-material/core";
+import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView } from 'react-native';
+import { TextInput, IconButton, HStack } from "@react-native-material/core";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -109,42 +108,45 @@ const CreateModal = ({ navigation, space }) => {
                             </Button>
                         )} />
 
-                    {(Platform.OS === 'ios' || datePicker) && (
-                        <View style={styles.schedulePicker}>
-                            <DateTimePicker
-                                value={date}
-                                mode={'date'}
-                                is24Hour={true}
-                                onChange={onDateSelected}
-                            />
-                        </View>
-                    )}
+                    <HStack justify='end'>
 
-                    {(Platform.OS === 'ios' || timePicker) && (
-                        <View style={styles.schedulePicker}>
-                            <DateTimePicker
-                                value={time}
-                                mode={'time'}
-                                is24Hour={false}
-                                onChange={onTimeSelected}
-                            />
-                        </View>
-                    )}
+                        {(Platform.OS === 'ios' || timePicker) && (
+                            <View style={styles.schedulePicker}>
+                                <DateTimePicker
+                                    value={time}
+                                    mode={'time'}
+                                    is24Hour={false}
+                                    onChange={onTimeSelected}
+                                />
+                            </View>
+                        )}
 
-                    {Platform.OS !== 'ios' && !datePicker && (
-                        <View style={{ margin: 10 }}>
-                            <Button onPress={showDatePicker}>Select Date</Button>
-                        </View>
-                    )}
+                        {(Platform.OS === 'ios' || datePicker) && (
+                            <View style={styles.schedulePicker}>
+                                <DateTimePicker
+                                    value={date}
+                                    mode={'date'}
+                                    is24Hour={true}
+                                    onChange={onDateSelected}
+                                />
+                            </View>
+                        )}
 
-                    {Platform.OS !== 'ios' && !timePicker && (
-                        <View style={{ margin: 10 }}>
-                            <Button onPress={showTimePicker}>Select Time</Button>
-                        </View>
-                    )}
+                        {Platform.OS !== 'ios' && !timePicker && (
+                            <View style={{ margin: 10 }}>
+                                <Button onPress={showTimePicker}>Select Time</Button>
+                            </View>
+                        )}
 
+                        {Platform.OS !== 'ios' && !datePicker && (
+                            <View style={{ margin: 10 }}>
+                                <Button onPress={showDatePicker}>Select Date</Button>
+                            </View>
+                        )}
 
-                    <Text> SELECTED DATE: {date ? date.toString() : ''}</Text>
+                    </HStack>
+
+                    <Text> Scheduled at: {date ? date.toString() : ''}</Text>
 
                     <Text variant="titleMedium">Speakers</Text>
                     <View style={{ width: "100%" }} >
@@ -189,7 +191,7 @@ const CreateModal = ({ navigation, space }) => {
 
 const styles = StyleSheet.create({
     modalView: {
-        height: '50%',
+        height: '70%',
         marginTop: 'auto',
         backgroundColor: '#FFF4F1',
         borderTopStartRadius: 20,
@@ -232,7 +234,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10, shadowRadius: 4, shadowOpacity: 0.1
     },
     schedulePicker: {
-        alignItems: 'left',
         marginVertical: 5,
     },
 });
