@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { auth } from '../firebase.config';
+import { auth, db } from '../firebase.config';
 import { Box, Button, Spacer, Surface, TextInput, VStack } from '@react-native-material/core';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { UserContext } from '../Contexts';
 
 
 export default function AuthenticationScreen({ navigation }) {
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true)
@@ -17,15 +18,21 @@ export default function AuthenticationScreen({ navigation }) {
   const handleLogin = () => {
     let authPassword = password;
     setError("")
-    // if (authPassword == "") {
-    //   authPassword = "TestPassword123*";
-    // }
+    //if (authPassword == "") {
+    //  authPassword = "TestPassword123*";
+    //}
     if (!isLogin) {
       setUser(auth.createUserWithEmailAndPassword(email, authPassword)
         .then((response) => {
           console.log("Register response: " + JSON.stringify(response.user))
-          setUser(response.user)
-          navigation.navigate('Home');
+          db.collection("users").doc(response.user.uid).set({
+            name: name,
+          }).then(() => {
+            setUser({firebaseUser: response.user, userData: {name: name, image: null}});
+            navigation.navigate('Home');
+          }).catch((error) => {
+            console.log("Error setting document:", error);
+          });
         }));
     } else {
       setUser(auth.signInWithEmailAndPassword(email, authPassword)
@@ -33,9 +40,18 @@ export default function AuthenticationScreen({ navigation }) {
           setError(error.message)
           console.log("Login error: " + JSON.stringify(error))
         }).then((response) => {
-          console.log("Login response: " + JSON.stringify(response.user))
-          setUser(response.user)
-          navigation.navigate('Home');
+          console.log("Login response: " + JSON.stringify(response.user));
+          db.collection("users").doc(response.user.uid).get().then((doc) => {
+            if (doc.exists) {
+              console.log("Document data:", doc.data());
+              setUser({firebaseUser: response.user, userData: doc.data()});
+            } else {
+              setUser({firebaseUser: response.user, userData: {name: email}});
+            }
+            navigation.navigate('Home');
+          }).catch((error) => {
+            console.log("Error getting document:", error);
+          });
         }));
     }
   }
@@ -54,6 +70,10 @@ export default function AuthenticationScreen({ navigation }) {
         <VStack>
           <Text style={styles.title}>Redbook</Text>
           <Box>
+          {isLogin ? null : (
+            <TextInput style={styles.textBox}
+              placeholder="Name" value={name} onChangeText={text => setName(text)} leading={props => <Icon name="tag" {...props} />} />
+          )}
             <TextInput style={styles.textBox}
               autoCapitalize='none'
               placeholder="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />
@@ -69,7 +89,6 @@ export default function AuthenticationScreen({ navigation }) {
             <Button variant="text" title={isLogin ? "Register" : "Login"} color="white" onPress={handleSwitch} />
           </Box>
         </VStack>
-
       </Surface>
       <Spacer />
     </View>
