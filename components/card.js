@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
 import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
