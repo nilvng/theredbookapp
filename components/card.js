@@ -1,42 +1,53 @@
 import { HStack } from '@react-native-material/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
 });
 
 export default function Card({ data }) {
     const [notificationScheduled, setNotificationScheduled] = useState(false);
 
+    const requestNotificationPermission = async () => {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        if (status !== 'granted') {
+            console.log('Notification permissions not granted');
+            return;
+        }
+        console.log('Notification permissions granted');
+    };
+
     const scheduleNotification = async () => {
         const title = data.title;
         const notiDate = new Date(data.startDate);
-    
+
         await Notifications.scheduleNotificationAsync({
-          content: {
-            title: 'Redbook - Symposium',
-            body: `${title} is starting!`,
-          },
-          trigger: {
-            date: notiDate,
-          },
+            content: {
+                title: 'Redbook - Symposium',
+                body: `${title} is starting!`,
+            },
+            trigger: {
+                date: notiDate,
+            },
         });
-    
+
         setNotificationScheduled(true);
-      };
-    
-      const handleSetReminder = () => {
+    };
+
+    const handleSetReminder = () => {
+        requestNotificationPermission();
+        console.log("Reminder set")
         scheduleNotification();
-      };
-    
+    };
+
 
 
     const TextStackView = <View style={styles.textStack}>
