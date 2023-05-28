@@ -1,55 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
 import { getSpeakers, getTopicsNameString } from "../helpers/formatSelection";
-import * as Notifications from 'expo-notifications';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
 
 function DetailedModal({ route, navigation }) {
   const { symposium } = route.params;
 
   const handleChatPressed = () => {
-    navigation.navigate("Chat");
-  }
+    navigation.navigate('Chat');
+  };
 
   const routeBack = () => {
     navigation.goBack();
-  }
-
-  useEffect(() => {
-    // Subscribe to incoming notifications
-    const subscription = Notifications.addNotificationReceivedListener(handleNotification);
-
-    return () => {
-      // Clean up the subscription when the component unmounts
-      subscription.remove();
-    };
-  }, []);
-
-  const handleNotification = (notification) => {
-    // Handle the notification here
-    Alert.alert('Notification', notification.request.content.body);
   };
-
-  const scheduleNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Symposium Starting',
-        body: `${symposium.title} is starting!`,
-      },
-      trigger: { date: new Date(symposium.date) }, // Schedule the notification at the specified date and time
-    });
-  };
-
 
   return (
     <View style={styles.modalView}>
@@ -62,7 +28,6 @@ function DetailedModal({ route, navigation }) {
       <View style={styles.center}>
         <Text style={styles.title}>{symposium.title}</Text>
         <Text style={styles.subtitle}>{getTopicsNameString(symposium.topic)}</Text>
-        <Button title="Remind me" onPress={scheduleNotification} ></Button>
       </View>
       <View style={{ marginHorizontal: 12 }}>
         <Text style={styles.head1}>Speaker</Text>
