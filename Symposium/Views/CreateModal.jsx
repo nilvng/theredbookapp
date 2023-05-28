@@ -74,7 +74,7 @@ const CreateModal = ({ navigation, space }) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: '#000000AA' }}
         >
             <View style={styles.modalView}>
                 <HStack style={{ width: "100%", alignSelf: "baseline" }} direction='row' items='center' justify='between'>
