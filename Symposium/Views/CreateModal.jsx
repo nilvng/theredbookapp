@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { TextInput, IconButton, HStack } from "@react-native-material/core";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -8,6 +8,7 @@ import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
 import { topicList } from '../../helpers/formatSelection';
 import { addSymposium } from '../Models/firestore-helper';
+import AvatarName from '../../components/AvatarName';
 
 const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
@@ -43,6 +44,7 @@ const CreateModal = ({ navigation, space }) => {
         } else {
             updated.push(index)
         }
+        console.log(updated);
         setSelectedSpeaker(updated)
     }
     const handleOnPressTopic = (index) => {
@@ -157,24 +159,22 @@ const CreateModal = ({ navigation, space }) => {
                             keyExtractor={item => item.id}
                             extraData={selectedSpeakers}
                             renderItem={({ index, item }) => (
-                                <Card
-                                    key={index}
-                                    mode={'contained'}
-                                    style={{ marginHorizontal: 4 }}
-                                    contentStyle={{ backgroundColor: selectedSpeakers.includes(index) ? '#c0a3e6' : '#e1d8ed' }}
-                                    onPress={() => handleOnPressSpeaker(index)}>
-                                    <Card.Cover
-                                        source={item.avatar}
-                                        resizeMode={`contain`}
-                                        style={{ height: 50 }} />
-                                    <Card.Content>
-                                        <Text>{item.name}</Text>
-                                    </Card.Content>
-                                </Card>
+                                <TouchableOpacity
+                                    onPress={() => handleOnPressSpeaker(index)}
+                                >
+                                    <AvatarName
+                                        key={index}
+                                        name={item.name}
+                                        image={item.avatar.uri}
+                                        style={{ borderWidth: selectedSpeakers.includes(index) ? 2 : 0 }}
+                                        isSelected={selectedSpeakers.includes(index)}
+                                    />
+                                </TouchableOpacity>
                             )} />
-                    </View>
-                </ScrollView>
+                    </View >
+                </ScrollView >
             </View>
+
             <HStack style={styles.buttonContainer}
                 direction='row' justify='around' fill wrap="nowrap" spacing={8}>
                 <Button
@@ -187,7 +187,7 @@ const CreateModal = ({ navigation, space }) => {
                     icon={props => <Icon name='clock' {...props} />}
                 />
             </HStack>
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView >
     );
 };
 
