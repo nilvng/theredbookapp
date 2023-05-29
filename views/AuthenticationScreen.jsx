@@ -4,6 +4,7 @@ import { auth, db } from '../firebase.config';
 import { Box, Button, Spacer, Surface, TextInput, VStack } from '@react-native-material/core';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { UserContext } from '../Contexts';
+import { createUser, loginUser } from '../Symposium/Models/firestore-helper';
 
 
 export default function AuthenticationScreen({ navigation }) {
@@ -22,37 +23,23 @@ export default function AuthenticationScreen({ navigation }) {
     //  authPassword = "TestPassword123*";
     //}
     if (!isLogin) {
-      setUser(auth.createUserWithEmailAndPassword(email, authPassword)
-        .then((response) => {
-          console.log("Register response: " + JSON.stringify(response.user))
-          db.collection("users").doc(response.user.uid).set({
-            name: name,
-          }).then(() => {
-            setUser({firebaseUser: response.user, userData: {name: name, image: null}});
-            navigation.navigate('Home');
-          }).catch((error) => {
-            console.log("Error setting document:", error);
-          });
-        }));
+      createUser(email, authPassword, name, (result) => {
+        if (result.firebaseUser)  {
+          setUser(result);
+          navigation.navigate('Home');
+        } else {
+          console.log(result);
+        }
+      });
     } else {
-      setUser(auth.signInWithEmailAndPassword(email, authPassword)
-        .catch((error) => {
-          setError(error.message)
-          console.log("Login error: " + JSON.stringify(error))
-        }).then((response) => {
-          console.log("Login response: " + JSON.stringify(response.user));
-          db.collection("users").doc(response.user.uid).get().then((doc) => {
-            if (doc.exists) {
-              console.log("Document data:", doc.data());
-              setUser({firebaseUser: response.user, userData: doc.data()});
-            } else {
-              setUser({firebaseUser: response.user, userData: {name: email}});
-            }
-            navigation.navigate('Home');
-          }).catch((error) => {
-            console.log("Error getting document:", error);
-          });
-        }));
+      loginUser(email, authPassword, (result) => {
+        if (result.firebaseUser)  {
+          setUser(result);
+          navigation.navigate('Home');
+        } else {
+          console.log(result);
+        }
+      });
     }
   }
 
