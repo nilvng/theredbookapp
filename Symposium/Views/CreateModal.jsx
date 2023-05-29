@@ -7,6 +7,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
 import { topicList } from '../../helpers/formatSelection';
+import { addSymposium } from '../Models/firestore-helper';
 
 const CreateModal = ({ navigation, space }) => {
     const [selectedSpeakers, setSelectedSpeaker] = useState([]);
@@ -62,6 +63,7 @@ const CreateModal = ({ navigation, space }) => {
         }
         if (subject != "") {
             await insert(item)
+            await addSymposium(item)
         }
         routeBack()
     }
@@ -72,7 +74,7 @@ const CreateModal = ({ navigation, space }) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: '#000000AA' }}
         >
             <View style={styles.modalView}>
                 <HStack style={{ width: "100%", alignSelf: "baseline" }} direction='row' items='center' justify='between'>
