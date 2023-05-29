@@ -7,7 +7,7 @@ import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { initializeApp } from '@firebase/app';
 import { getFirestore } from '@firebase/firestore';
-import { addDoc, collection, onSnapshot, query, where } from '@firebase/firestore';
+import { addDoc, collection, onSnapshot, query, where, doc, updateDoc } from '@firebase/firestore';
 
 
 const firebaseConfig = {
@@ -24,14 +24,14 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const Chat = ({ route, navigation }) => {
-  const { SID } = route.params;
+  const { sid, title } = route.params.symposium;
   const [messages, setMessages] = useState([]);
   const [voteStatus, setVoteStatus] = useState({});
 
   React.useEffect(() => {
-    if (SID) {
+    if (sid) {
       const unsubscribe = onSnapshot(
-        query(collection(db, 'messages'), where('SID', '==', SID)),
+        query(collection(db, 'messages'), where('SID', '==', sid)),
         (snapshot) => {
           const firebaseMessages = snapshot.docs.map((doc) => ({
             ...doc.data(),
@@ -45,7 +45,7 @@ const Chat = ({ route, navigation }) => {
         unsubscribe();
       };
     }
-  }, [SID]);
+  }, [sid]);
 
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
@@ -57,13 +57,13 @@ const Chat = ({ route, navigation }) => {
   );
 
   const handleSendMessage = async (content) => {
-    if (SID) {
+    if (sid) {
       const newMessage = {
         id: messages.length + 1,
         content,
         upvotes: 0,
         downvotes: 0,
-        SID: SID,
+        SID: sid,
       };
 
       try {
@@ -107,14 +107,16 @@ const Chat = ({ route, navigation }) => {
 
     const messageToUpdate = updatedMessages.find((message) => message.id === id);
     if (messageToUpdate) {
-      db.collection(sanitizedTitle).doc(id).update({
+      const messageRef = doc(collection(db, 'messages'), id);
+      updateDoc(messageRef, {
         upvotes: messageToUpdate.upvotes,
         downvotes: messageToUpdate.downvotes,
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
-      });
+      })
+        .catch((error) => {
+          console.error("Error updating document: ", error);
+        });
     }
-  };
+  }
 
   const handleGoBack = () => {
     navigation.dispatch(StackActions.pop(1));
@@ -126,7 +128,7 @@ const Chat = ({ route, navigation }) => {
         <TouchableOpacity onPress={handleGoBack} style={styles.button}>
           <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.title}> Symposium </Text>
+        <Text style={styles.title}> {title} </Text>
       </View>
       <FlatList
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
