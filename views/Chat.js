@@ -7,7 +7,7 @@ import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { initializeApp } from '@firebase/app';
 import { getFirestore } from '@firebase/firestore';
-import { addDoc, collection, onSnapshot, query, where  } from '@firebase/firestore';
+import { addDoc, collection, onSnapshot, query, where } from '@firebase/firestore';
 
 
 const firebaseConfig = {
@@ -23,28 +23,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const Chat = ({ SID, navigation }) => {
-const [messages, setMessages] = useState([]);
-const [voteStatus, setVoteStatus] = useState({});
+const Chat = ({ route, navigation }) => {
+  const { SID } = route.params;
+  const [messages, setMessages] = useState([]);
+  const [voteStatus, setVoteStatus] = useState({});
 
-React.useEffect(() => {
-  if (SID) {
-    const unsubscribe = onSnapshot(
-      query(collection(db, 'messages'), where('SID', '==', SID)),
-      (snapshot) => {
-        const firebaseMessages = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setMessages(firebaseMessages);
-      }
-    );
+  React.useEffect(() => {
+    if (SID) {
+      const unsubscribe = onSnapshot(
+        query(collection(db, 'messages'), where('SID', '==', SID)),
+        (snapshot) => {
+          const firebaseMessages = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setMessages(firebaseMessages);
+        }
+      );
 
-    return () => {
-      unsubscribe();
-    };
-  }
-}, [SID]);
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [SID]);
 
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
@@ -64,14 +65,14 @@ React.useEffect(() => {
         downvotes: 0,
         SID: SID,
       };
-    
+
       try {
         await addDoc(collection(db, 'messages'), newMessage);
       } catch (error) {
         console.error("Error writing new message to Firestore", error);
-        return; 
+        return;
       }
-      
+
       setMessages([...messages, newMessage]);
     } else {
       console.error("SID is undefined");
@@ -113,7 +114,7 @@ React.useEffect(() => {
         console.error("Error updating document: ", error);
       });
     }
-};
+  };
 
   const handleGoBack = () => {
     navigation.dispatch(StackActions.pop(1));
