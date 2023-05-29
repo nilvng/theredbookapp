@@ -10,14 +10,19 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+      
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      }
     },
     "android": {
+      "permissions": ["NOTIFICATIONS"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/redbook_logo.png",
         "backgroundColor": "#ffffff"
