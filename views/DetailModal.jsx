@@ -10,8 +10,8 @@ function DetailedModal({ route, navigation }) {
   const { symposium } = route.params;
 
   const handleChatPressed = () => {
-    navigation.navigate('Chat');
-  };
+    navigation.navigate("Chat", { SID: symposium.sid });
+  }
 
   const routeBack = () => {
     navigation.goBack();
