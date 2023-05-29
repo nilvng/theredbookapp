@@ -13,48 +13,48 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function Card({ data }) {
+export default function Card({ navigation, data }) {
     const [notificationScheduled, setNotificationScheduled] = useState(false);
 
     useEffect(() => {
         requestNotificationPermission();
-      }, []);
-    
-      const requestNotificationPermission = async () => {
+    }, []);
+
+    const requestNotificationPermission = async () => {
         const settings = await Notifications.getPermissionsAsync();
         if (settings.granted) {
-          return;
+            return;
         }
-    
+
         const { status } = await Notifications.requestPermissionsAsync();
         if (status !== 'granted') {
-          return;
+            return;
         }
         console.log('Notification permissions granted');
-      };
-    
-      const scheduleNotification = async () => {
+    };
+
+    const scheduleNotification = async () => {
         const title = data.title;
         const notiDate = new Date(data.startDate);
-    
+
         await Notifications.scheduleNotificationAsync({
-          content: {
-            title: 'Redbook - Symposium',
-            body: `${title} is starting!`,
-          },
-          trigger: {
-            date: notiDate,
-          },
+            content: {
+                title: 'Redbook - Symposium',
+                body: `${title} is starting!`,
+            },
+            trigger: {
+                date: notiDate,
+            },
         });
-    
+
         setNotificationScheduled(true);
-      };
-    
-      const handleSetReminder = async () => {
+    };
+
+    const handleSetReminder = async () => {
         await requestNotificationPermission();
         await scheduleNotification();
         console.log("Reminder set");
-      };
+    };
 
 
 
@@ -72,12 +72,14 @@ export default function Card({ data }) {
                 <View style={styles.detailContainer}>
                     <HStack>
                         {TextStackView}
-                        {Date.parse(data.startDate) < Date.now() ? <Button>Join</Button> : <Button onPress={handleSetReminder}>Remind</Button>}
-                    </HStack>
-                </View>
+                        {Date.parse(data.startDate) < Date.now() ? <Button
+                            onPress={() => { navigation.navigate("Live", { symposium: data }); }}
+                        >Join</Button> : <Button onPress={handleSetReminder}>Remind</Button>}
+                    </HStack >
+                </View >
 
-            </View>
-        </View>
+            </View >
+        </View >
     );
 }
 

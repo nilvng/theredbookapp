@@ -28,7 +28,6 @@ function Home({ navigation }) {
                 />
             </VStack>
 
-            <LiveView style={{ width: "80%" }} symposium={testData} />
         </View>
 
     );
