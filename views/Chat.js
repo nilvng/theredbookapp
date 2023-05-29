@@ -7,7 +7,8 @@ import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { initializeApp } from '@firebase/app';
 import { getFirestore } from '@firebase/firestore';
-import { addDoc, collection, onSnapshot } from '@firebase/firestore';
+import { addDoc, collection, onSnapshot, query, where  } from '@firebase/firestore';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzu1mjzrOqKX-0MROl-kOicR6NhpttvZ8",
@@ -22,28 +23,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const initialMessages = [
-  { id: 1, content: 'Hi', upvotes: 3, downvotes: 4 },
-  { id: 2, content: 'Hello', upvotes: 2, downvotes: 1 },
-  { id: 3, content: 'How are you?', upvotes: 5, downvotes: 0 },
-  { id: 4, content: 'This is a test message', upvotes: 0, downvotes: 0 },
-];
+const Chat = ({ SID, navigation }) => {
+const [messages, setMessages] = useState([]);
+const [voteStatus, setVoteStatus] = useState({});
 
-const Chat = ({ title, navigation }) => {
-  const [messages, setMessages] = useState(initialMessages);
-  const [voteStatus, setVoteStatus] = useState({});
+React.useEffect(() => {
+  if (SID) {
+    const unsubscribe = onSnapshot(
+      query(collection(db, 'messages'), where('SID', '==', SID)),
+      (snapshot) => {
+        const firebaseMessages = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setMessages(firebaseMessages);
+      }
+    );
 
-  React.useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'messages'), (snapshot) => {
-      const firebaseMessages = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setMessages(firebaseMessages);
-    });
-  
-    // Clean up function
     return () => {
       unsubscribe();
     };
-  }, []);
+  }
+}, [SID]);
 
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
@@ -55,26 +56,29 @@ const Chat = ({ title, navigation }) => {
   );
 
   const handleSendMessage = async (content) => {
-    const newMessage = {
-      id: messages.length + 1,
-      content,
-      upvotes: 0,
-      downvotes: 0,
-    };
-
-    try {
-      await addDoc(collection(db, 'messages'), newMessage);
-    } catch (error) {
-      console.error("Error writing new message to Firestore", error);
-      return; // exit the function early if there's an error
+    if (SID) {
+      const newMessage = {
+        id: messages.length + 1,
+        content,
+        upvotes: 0,
+        downvotes: 0,
+        SID: SID,
+      };
+    
+      try {
+        await addDoc(collection(db, 'messages'), newMessage);
+      } catch (error) {
+        console.error("Error writing new message to Firestore", error);
+        return; 
+      }
+      
+      setMessages([...messages, newMessage]);
+    } else {
+      console.error("SID is undefined");
     }
-
-    setMessages([...messages, newMessage]);
   };
 
   const handleVote = (id, type) => {
-    setVoteStatus({ ...voteStatus, [id]: type });
-
     const updatedMessages = messages.map((message) => {
       if (message.id === id) {
         let upvotes = message["upvotes"];
@@ -96,8 +100,20 @@ const Chat = ({ title, navigation }) => {
       }
       return message;
     });
+
     setMessages(updatedMessages);
-  };
+    setVoteStatus({ ...voteStatus, [id]: type });
+
+    const messageToUpdate = updatedMessages.find((message) => message.id === id);
+    if (messageToUpdate) {
+      db.collection(sanitizedTitle).doc(id).update({
+        upvotes: messageToUpdate.upvotes,
+        downvotes: messageToUpdate.downvotes,
+      }).catch((error) => {
+        console.error("Error updating document: ", error);
+      });
+    }
+};
 
   const handleGoBack = () => {
     navigation.dispatch(StackActions.pop(1));
@@ -109,7 +125,7 @@ const Chat = ({ title, navigation }) => {
         <TouchableOpacity onPress={handleGoBack} style={styles.button}>
           <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.title}> Symposium (title) </Text>
+        <Text style={styles.title}> Symposium </Text>
       </View>
       <FlatList
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
