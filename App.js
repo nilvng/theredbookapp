@@ -13,6 +13,7 @@ import Home from './views/home';
 import AuthenticationScreen from './views/AuthenticationScreen';
 import DetailedModal from './views/DetailModal';
 import { UserContext } from './Contexts';
+import LiveView from './Symposium/Views/LiveView';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,11 @@ export default function App() {
             name='Detail'
             options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
             {props => <DetailedModal {...props} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name='Live'
+            options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
+            {props => <LiveView {...props} />}
           </Stack.Screen>
         </Stack.Navigator>
       </UserContext.Provider>

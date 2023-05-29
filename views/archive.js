@@ -39,7 +39,7 @@ export default function Archive({ navigation }) {
                 data={currentSymposiums}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => { onItemPress(item) }}>
-                        <Card data={item} />
+                        <Card data={item} navigation={navigation} />
                     </TouchableOpacity>)}
                 ItemSeparatorComponent={<Separator />}
             />
