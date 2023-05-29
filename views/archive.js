@@ -20,7 +20,6 @@ export default function Archive({ navigation }) {
     }, []);
 
     const onItemPress = (item) => {
-        setSymposiums(item);
         navigation.navigate("Detail", { symposium: item });
     }
 
