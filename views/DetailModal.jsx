@@ -1,19 +1,21 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
 import { getSpeakers, getTopicsNameString } from "../helpers/formatSelection";
+
+
 function DetailedModal({ route, navigation }) {
   const { symposium } = route.params;
 
   const handleChatPressed = () => {
-    navigation.navigate("Chat");
+    navigation.navigate("Chat", { symposium: symposium });
   }
 
   const routeBack = () => {
     navigation.goBack();
-  }
+  };
 
   return (
     <View style={styles.modalView}>
@@ -32,7 +34,7 @@ function DetailedModal({ route, navigation }) {
         <HStack>
           {
             getSpeakers(symposium.host).map((speaker) => (
-              <AvatarName name={speaker.name} />
+              <AvatarName key={speaker.id} name={speaker.name} />
             ))
           }
         </HStack>
