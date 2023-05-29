@@ -59,7 +59,7 @@ export default function Card({ navigation, data }) {
 
 
     const TextStackView = <View style={styles.textStack}>
-        <Text style={styles.hostText}> {getSpeakersNameString(data.host)} hosted</Text>
+        {data.host != null && data.host.length > 0 ? <Text style={styles.text}>{data.host[0].name}</Text> : null}
         {data.startDate != null ? <Text style={styles.text}>{data.startDate}</Text> : null}
     </View>;
     return (
