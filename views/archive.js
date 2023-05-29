@@ -7,6 +7,7 @@ import { getSymposiums } from '../Symposium/Models/firestore-helper';
 
 export default function Archive({ navigation }) {
     const [currentSymposiums, setSymposiums] = useState();
+    const [data, setData] = useState();
 
     const loadData = useCallback(async () => {
         try {

@@ -1,9 +1,63 @@
 import { HStack } from '@react-native-material/core';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
+
 export default function Card({ data }) {
+    const [notificationScheduled, setNotificationScheduled] = useState(false);
+
+    useEffect(() => {
+        requestNotificationPermission();
+      }, []);
+    
+      const requestNotificationPermission = async () => {
+        const settings = await Notifications.getPermissionsAsync();
+        if (settings.granted) {
+          return;
+        }
+    
+        const { status } = await Notifications.requestPermissionsAsync();
+        if (status !== 'granted') {
+          return;
+        }
+        console.log('Notification permissions granted');
+      };
+    
+      const scheduleNotification = async () => {
+        const title = data.title;
+        const notiDate = new Date(data.startDate);
+    
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Redbook - Symposium',
+            body: `${title} is starting!`,
+          },
+          trigger: {
+            date: notiDate,
+          },
+        });
+    
+        setNotificationScheduled(true);
+      };
+    
+      const handleSetReminder = async () => {
+        await requestNotificationPermission();
+        await scheduleNotification();
+        console.log("Reminder set");
+      };
+
+
+
     const TextStackView = <View style={styles.textStack}>
         <Text style={styles.hostText}> {getSpeakersNameString(data.host)} hosted</Text>
         {data.startDate != null ? <Text style={styles.text}>{data.startDate}</Text> : null}
@@ -18,7 +72,7 @@ export default function Card({ data }) {
                 <View style={styles.detailContainer}>
                     <HStack>
                         {TextStackView}
-                        {Date.parse(data.startDate) < Date.now() ? <Button>Join</Button> : <Button>Remind</Button>}
+                        {Date.parse(data.startDate) < Date.now() ? <Button>Join</Button> : <Button onPress={handleSetReminder}>Remind</Button>}
                     </HStack>
                 </View>
 
