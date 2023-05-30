@@ -2,7 +2,7 @@ import { HStack } from '@react-native-material/core';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import { getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
+import { getSpeakers, getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
@@ -58,10 +58,12 @@ export default function Card({ navigation, data }) {
 
 
 
-    const TextStackView = <View style={styles.textStack}>
-        {data.host != null && data.host.length > 0 ? <Text style={styles.text}>{data.host[0].name}</Text> : null}
-        {data.startDate != null ? <Text style={styles.text}>{data.startDate}</Text> : null}
-    </View>;
+    const TextStackView = (speakers) => (
+        <View style={styles.textStack}>
+            {speakers != null && speakers.length > 0 ? <Text style={styles.text}>{speakers[0].name} hosted</Text> : null}
+            {data.startDate != null ? <Text style={styles.text}>{data.startDate}</Text> : null}
+        </View>
+    )
     return (
         <View style={styles.card}>
             <View style={styles.cardContent}>
@@ -71,7 +73,7 @@ export default function Card({ navigation, data }) {
                 </View>
                 <View style={styles.detailContainer}>
                     <HStack>
-                        {TextStackView}
+                        {TextStackView(getSpeakers(data.host))}
                         {Date.parse(data.startDate) < Date.now() ? <Button
                             onPress={() => { navigation.navigate("Live", { symposium: data }); }}
                         >Join</Button> : <Button onPress={handleSetReminder}>Remind</Button>}

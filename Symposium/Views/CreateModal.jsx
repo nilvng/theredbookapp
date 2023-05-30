@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, IconButton, HStack } from "@react-native-material/core";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { v1 } from 'uuid';
@@ -63,11 +63,13 @@ const CreateModal = ({ navigation, space }) => {
             host: selectedSpeakers.toString(),
             startDate: date.toString(),
         }
-        if (subject != "") {
+        if (subject != "" && selectedSpeakers.length > 0) {
             await insert(item)
             await addSymposium(item)
+            routeBack()
+        } else {
+            Alert.alert("Please fill the subject line and select at least one speaker")
         }
-        routeBack()
     }
     const routeBack = () => {
         navigation.goBack();
