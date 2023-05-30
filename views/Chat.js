@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { db } from '../firebase.config';
-import { addDoc, collection, onSnapshot, query, where, doc, updateDoc } from '@firebase/firestore';
+import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy } from '@firebase/firestore';
 
 
 const Chat = ({ route, navigation }) => {
@@ -17,7 +17,7 @@ const Chat = ({ route, navigation }) => {
   React.useEffect(() => {
     if (sid) {
       const unsubscribe = onSnapshot(
-        query(collection(db, 'messages'), where('SID', '==', sid)),
+        query(collection(db, 'messages'), where('SID', '==', sid), orderBy('upvotes', 'desc')),
         (snapshot) => {
           const firebaseMessages = snapshot.docs.map((doc) => ({
             ...doc.data(),
