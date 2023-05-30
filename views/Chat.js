@@ -5,7 +5,7 @@ import InputBox from '../Chat/InputBox';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
-import { db } from '../firebase.config';
+import { auth, db } from '../firebase.config';
 import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy } from '@firebase/firestore';
 
 
@@ -36,7 +36,7 @@ const Chat = ({ route, navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
       <View style={styles.message}>
-        <Message content={item.content} />
+        <Message content={item.content} userName={item.userName} />
         <VoteView item={item} onVote={handleVote} voteStatus={voteStatus} />
       </View>
     </View>
@@ -50,6 +50,7 @@ const Chat = ({ route, navigation }) => {
         upvotes: 0,
         downvotes: 0,
         SID: sid,
+        userName: auth.currentUser.displayName ?? auth.currentUser.email
       };
 
       try {
