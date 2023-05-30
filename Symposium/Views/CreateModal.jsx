@@ -4,7 +4,7 @@ import { TextInput, IconButton, HStack } from "@react-native-material/core";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { v1 } from 'uuid';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Card, Text, Button } from 'react-native-paper';
+import { Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
 import { topicList } from '../../helpers/formatSelection';
 import { addSymposium } from '../Models/firestore-helper';
@@ -44,7 +44,6 @@ const CreateModal = ({ navigation, space }) => {
         } else {
             updated.push(index)
         }
-        console.log(updated);
         setSelectedSpeaker(updated)
     }
     const handleOnPressTopic = (index) => {
