@@ -19,13 +19,10 @@ export default function AuthenticationScreen({ navigation }) {
   const handleLogin = () => {
     let authPassword = password;
     setError("")
-    //if (authPassword == "") {
-    //  authPassword = "TestPassword123*";
-    //}
     if (!isLogin) {
       createUser(email, authPassword, name, (result) => {
-        if (result.firebaseUser)  {
-          setUser(result);
+        if (result.firebaseUser) {
+          setUser(result.userData);
           navigation.navigate('Home');
         } else {
           console.log(result);
@@ -33,8 +30,8 @@ export default function AuthenticationScreen({ navigation }) {
       });
     } else {
       loginUser(email, authPassword, (result) => {
-        if (result.firebaseUser)  {
-          setUser(result);
+        if (result.firebaseUser) {
+          setUser(result.userData);
           navigation.navigate('Home');
         } else {
           console.log(result);
@@ -57,10 +54,10 @@ export default function AuthenticationScreen({ navigation }) {
         <VStack>
           <Text style={styles.title}>Redbook</Text>
           <Box>
-          {isLogin ? null : (
-            <TextInput style={styles.textBox}
-              placeholder="Name" value={name} onChangeText={text => setName(text)} leading={props => <Icon name="tag" {...props} />} />
-          )}
+            {isLogin ? null : (
+              <TextInput style={styles.textBox}
+                placeholder="Name" value={name} onChangeText={text => setName(text)} leading={props => <Icon name="tag" {...props} />} />
+            )}
             <TextInput style={styles.textBox}
               autoCapitalize='none'
               placeholder="Email" value={email} onChangeText={text => setEmail(text)} leading={props => <Icon name="account" {...props} />} />

@@ -11,7 +11,7 @@ function Home({ navigation }) {
     return (
         <View style={styles.container}>
             <VStack style={styles.container} items="center" justify="center" spacing={12}>
-                <Text variant="h5">Welcome {user?.userData.name.split(" ")[0] ?? user?.email}</Text>
+                <Text variant="h5">Welcome {user?.name ?? user?.email}</Text>
 
                 <Button style={styles.button} title="Archive" color="purple"
                     onPress={() => navigation.navigate('Archive')}

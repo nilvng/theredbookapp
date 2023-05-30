@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import Message from '../Chat/Message';
 import InputBox from '../Chat/InputBox';
@@ -7,13 +7,14 @@ import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { auth, db } from '../firebase.config';
 import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy } from '@firebase/firestore';
+import { UserContext } from '../Contexts';
 
 
 const Chat = ({ route, navigation }) => {
   const { sid, title } = route.params.symposium;
   const [messages, setMessages] = useState([]);
   const [voteStatus, setVoteStatus] = useState({});
-
+  const [user] = useContext(UserContext);
   React.useEffect(() => {
     if (sid) {
       const unsubscribe = onSnapshot(
@@ -50,7 +51,7 @@ const Chat = ({ route, navigation }) => {
         upvotes: 0,
         downvotes: 0,
         SID: sid,
-        userName: auth.currentUser.displayName ?? auth.currentUser.email
+        userName: user.name ?? auth.currentUser.email
       };
 
       try {

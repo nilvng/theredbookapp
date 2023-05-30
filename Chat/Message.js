@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import MessageBubble from './MessageBb';
 import { Avatar } from 'react-native-paper';
 const Message = ({ content, isMyMessage, userName }) => {

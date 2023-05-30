@@ -25,17 +25,32 @@ export const createUser = async (email, password, name, callback) => {
         .catch((error) => {
             callback(error);
         }).then((response) => {
-            db.collection("users").doc(response.user.uid).set({
+            const user = {
                 name: name,
-            }).then(() => {
+                email: email,
+                image: null
+            }
+            db.collection("users").doc(response.user.uid).set(user).then(() => {
                 if (!response || !response.user) {
                     return;
                 }
-                callback({ firebaseUser: response.user, userData: { name: name, image: null } });
+                callback({ firebaseUser: response.user, userData: user });
             }).catch((error) => {
                 callback(error);
             });
         });
+}
+
+export const getUser = async (uid, callback) => {
+    await db.collection("users").doc(uid).get().then((doc) => {
+        if (doc.exists) {
+            callback(doc.data());
+        } else {
+            callback(null);
+        }
+    }).catch((error) => {
+        callback(error);
+    });
 }
 
 export const loginUser = async (email, password, callback) => {
