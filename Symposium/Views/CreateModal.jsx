@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { TextInput, IconButton, HStack } from "@react-native-material/core";
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { v1 } from 'uuid';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card, Text, Button } from 'react-native-paper';
 import { insert } from '../Models/symposium-db';
@@ -58,6 +58,7 @@ const CreateModal = ({ navigation, space }) => {
     }
     const handleOnPressSubmit = async () => {
         const item = {
+            sid: v1().toString(),
             title: subject,
             topic: selectedTopics.toString(),
             host: selectedSpeakers.toString(),
