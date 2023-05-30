@@ -14,10 +14,10 @@ const Message = ({ content, isMyMessage, userName }) => {
 
   return (
     <View style={styles.messageContainer}>
-      {userName != null && <Avatar.Text size={40} label={userName[0].toUpperCase()} />}
-      {userName == null && <Avatar.Text size={40} label="XD" />}
+      {userName != null && <Avatar.Text size={40} label={userName[0].toUpperCase()} style={{ backgroundColor: isMyMessage ? "red" : "purple" }} />}
+      {userName == null && <Avatar.Text size={40} label="XD" color={isMyMessage ? "red" : "purple"} />}
       <MessageBubble isMyMessage={isMyMessage}>
-        <Text style={{ color: isMyMessage ? '#fff' : '#000' }}>{content}</Text>
+        <Text style={{ color: '#000' }}>{content}</Text>
       </MessageBubble>
     </View>
   );

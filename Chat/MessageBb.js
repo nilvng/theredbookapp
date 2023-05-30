@@ -14,7 +14,7 @@ const MessageBubble = ({ children, isMyMessage }) => {
     },
   });
 
-  const containerStyle = isMyMessage ? styles.containerRight : styles.containerLeft;
+  const containerStyle = styles.containerLeft;
 
   return <View style={containerStyle}>{children}</View>;
 };
