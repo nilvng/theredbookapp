@@ -1,5 +1,5 @@
-import { FlatList, View } from "react-native";
-import React, { useState } from 'react';
+import { View } from "react-native";
+import React from 'react';
 import { Image } from "react-native";
 import { HStack, Text, Avatar } from "@react-native-material/core";
 import { Button, Title } from "react-native-paper";

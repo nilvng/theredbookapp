@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native
 import Message from '../Chat/Message';
 import InputBox from '../Chat/InputBox';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
-import VoteView from '../Chat/VoteView';
 import { StackActions } from '@react-navigation/native';
 import { auth, db } from '../firebase.config';
 import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy } from '@firebase/firestore';

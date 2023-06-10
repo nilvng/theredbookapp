@@ -1,6 +1,4 @@
 import { View, StyleSheet } from "react-native";
-import LiveView from "../Symposium/Views/LiveView";
-import { testData } from "../helpers/formatSelection";
 import React, { useContext } from 'react';
 import { Button, Text, VStack } from "@react-native-material/core";
 import { UserContext } from "../Contexts";

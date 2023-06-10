@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { VStack, Box, Divider, Avatar, HStack, Button, Spacer } from "@react-native-material/core";
+import { VStack, Box, Avatar, HStack, Button, Spacer } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 
 export default function IncomingCall({ navigation }) {

@@ -2,7 +2,7 @@ import { HStack } from '@react-native-material/core';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import { getSpeakers, getSpeakersNameString, getTopicsNameString } from '../helpers/formatSelection';
+import { getSpeakers, getTopicsNameString } from '../helpers/formatSelection';
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({

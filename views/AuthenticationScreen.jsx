@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { auth, db } from '../firebase.config';
 import { Box, Button, Spacer, Surface, TextInput, VStack } from '@react-native-material/core';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { UserContext } from '../Contexts';

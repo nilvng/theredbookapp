@@ -1,6 +1,6 @@
 import React from 'react';
 import Chat from './views/Chat';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Archive from './views/archive';
 import IncomingCall from './views/incomingCall';
 import { testData } from './helpers/formatSelection';
