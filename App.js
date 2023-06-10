@@ -67,12 +67,12 @@ export default function App() {
           </Stack.Screen>
           <Stack.Screen
             name='Detail'
-            options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
+            options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
             {props => <DetailedModal {...props} />}
           </Stack.Screen>
           <Stack.Screen
             name='Live'
-            options={{ cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid, presentation: "transparentModal" }}>
+            options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS, presentation: "transparentModal" }}>
             {props => <LiveView {...props} />}
           </Stack.Screen>
         </Stack.Navigator>

@@ -4,10 +4,10 @@ import { Button, HStack } from "@react-native-material/core";
 import { StackActions } from '@react-navigation/native';
 import Card from '../components/card';
 import { getSymposiums } from '../Symposium/Models/firestore-helper';
+import { SafeAreaView } from 'react-navigation';
 
 export default function Archive({ navigation }) {
     const [currentSymposiums, setSymposiums] = useState();
-    const [data, setData] = useState();
 
     const loadData = useCallback(async () => {
         try {
@@ -48,22 +48,24 @@ export default function Archive({ navigation }) {
 
 
     return (
-        <View style={styles.container}>
-            <HStack>
-                <Text style={styles.title}>Archive</Text>
-            </HStack>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <HStack>
+                    <Text style={styles.title}>Archive</Text>
+                </HStack>
 
-            <SymposiumList />
+                <SymposiumList />
 
 
-            <HStack>
-                <Button style={[styles.button]} title="Go back" color="purple"
-                    onPress={() => {
-                        navigation.dispatch(StackActions.pop(1));
-                    }} />
-            </HStack>
+                <HStack>
+                    <Button style={[styles.button]} title="Go back" color="purple"
+                        onPress={() => {
+                            navigation.dispatch(StackActions.pop(1));
+                        }} />
+                </HStack>
 
-        </View>
+            </View>
+        </SafeAreaView>
     )
 
 }

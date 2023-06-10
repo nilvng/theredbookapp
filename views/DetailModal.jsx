@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { HStack, Button } from "@react-native-material/core";
 import { IconButton } from "react-native-paper";
 import AvatarName from "../components/AvatarName";
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 5,
     overflow: 'hidden',
+    paddingTop: 20,
     alignContent: 'flex-end',
   },
   center: {
