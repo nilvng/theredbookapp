@@ -37,8 +37,11 @@ const Chat = ({ route, navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
       <View style={styles.message}>
-        <Message content={item.content} userName={item.userName} isMyMessage={user.name == item.userName} />
-        <VoteView item={item} onVote={handleVote} voteStatus={voteStatus}/>
+        <Message 
+          item={item}
+          isMyMessage={user.name == item.userName}
+          onVote={handleVote}
+          />
       </View>
     </View>
   );
