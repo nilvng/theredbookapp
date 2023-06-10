@@ -25,6 +25,7 @@ export default function AuthenticationScreen({ navigation }) {
           setUser(result.userData);
           navigation.navigate('Home');
         } else {
+          setError(result.message);
           console.log(result);
         }
       });
@@ -34,6 +35,7 @@ export default function AuthenticationScreen({ navigation }) {
           setUser(result.userData);
           navigation.navigate('Home');
         } else {
+          setError(result.message);
           console.log(result);
         }
       });
