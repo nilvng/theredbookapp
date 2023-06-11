@@ -1,0 +1,6 @@
+We are using Firebase as our go-to cloud service.
+You can find more information
+
+Here is a testing account, you can use to sign-in.
+Email: nil+2@gmail.com
+password: 123456
