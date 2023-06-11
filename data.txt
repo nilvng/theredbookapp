@@ -1,5 +1,5 @@
 We are using Firebase as our go-to cloud service.
-You can find more information
+You can find more information on how we implement Firebase work in this path `./Symposium/firestorehelper.js`
 
 Here is a testing account, you can use to sign-in.
 Email: nil+2@gmail.com
