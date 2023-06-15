@@ -6,9 +6,14 @@ import Card from '../components/card';
 import { getSymposiums } from '../Symposium/Models/firestore-helper';
 import { SafeAreaView } from 'react-navigation';
 
+// Archive Page
+
 export default function Archive({ navigation }) {
     const [currentSymposiums, setSymposiums] = useState();
 
+
+    // Loads symposiums from firestore
+    // Sets currentSymposiums as a state to be used later in components.
     const loadData = useCallback(async () => {
         try {
             getSymposiums().then((data) => {
@@ -19,27 +24,36 @@ export default function Archive({ navigation }) {
         }
     }, []);
 
+    // Used to navigate to the detailed modal view
     const onItemPress = (item) => {
         navigation.navigate("Detail", { symposium: item });
     }
 
+    // Loads data on page load
     useEffect(() => {
         loadData();
     }, [loadData]);
 
+    // Separator used for the flast list
     const Separator = () => {
         return <View style={styles.separator} />;
     };
 
+    // Flatlist of symposiums
     const SymposiumList = () => {
         return (
             <FlatList
                 style={{ width: '94%' }}
+                // Sets the data to the current symposiums through the state set earlier
                 data={currentSymposiums}
+                // Renders the symposiums using the card component
                 renderItem={({ item }) => (
+                    // When the card is pressed, navigate to the detailed view
                     <TouchableOpacity onPress={() => { onItemPress(item) }}>
                         <Card data={item} navigation={navigation} />
                     </TouchableOpacity>)}
+                // Uses the separator element created earlier
+                // This is added after every item in the list
                 ItemSeparatorComponent={<Separator />}
             />
         )
@@ -50,13 +64,16 @@ export default function Archive({ navigation }) {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
+                
+                // Header
                 <HStack>
                     <Text style={styles.title}>Archive</Text>
                 </HStack>
 
+                // Renders the symposium list
                 <SymposiumList />
 
-
+                // Button to navigate back to the previous screen
                 <HStack>
                     <Button style={[styles.button]} title="Go back" color="purple"
                         onPress={() => {
