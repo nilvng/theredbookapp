@@ -1,10 +1,14 @@
-// Import the functions you need from the SDKs you need
+/**
+ * Firebase Configuration.
+ * 
+ * This file contains the configuration for Firebase and initializes the services.
+ */
+
+// Firebase Imports
+// https://firebase.google.com/docs/web/setup#available-libraries
 import firebase from "firebase/compat/app";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,6 +25,7 @@ const firebaseConfig = {
 // Initialize Firebase
 let app = firebase.initializeApp(firebaseConfig);
 
+// Enable access to Firebase's authentication and database services
 const auth = firebase.auth(app);
 const db = firebase.firestore(app);
 
