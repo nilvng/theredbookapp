@@ -1,4 +1,12 @@
+/**
+ * Firebase Helper.
+ * 
+ * This file contains helper functions for accessing the Firebase services.
+ */
+
+// Project Imports
 import { auth, db } from "../../firebase.config";
+
 
 const collectionName = "symposiums";
 
@@ -20,6 +28,16 @@ export const addSymposium = async (symposium) => {
         })
 }
 
+/**
+ * Creates a new user on firebase including the user profile data.
+ *
+ * This function returns the a object containing `firebaseUser` (Firebase User) and `userData` (User Profile Data).
+ *  
+ * @param {string} email 
+ * @param {string} password 
+ * @param {string} name 
+ * @param {(result: object) => void} callback 
+ */
 export const createUser = async (email, password, name, callback) => {
     await auth.createUserWithEmailAndPassword(email, password)
         .catch((error) => {
@@ -41,6 +59,12 @@ export const createUser = async (email, password, name, callback) => {
         });
 }
 
+/**
+ * Gets the user profile data from firebase.
+ * 
+ * @param {string} uid 
+ * @param {(result: object) => void} callback 
+ */
 export const getUser = async (uid, callback) => {
     await db.collection("users").doc(uid).get().then((doc) => {
         if (doc.exists) {
@@ -53,6 +77,15 @@ export const getUser = async (uid, callback) => {
     });
 }
 
+/**
+ * Logs the user in using firebase's authentication service.
+ * 
+ * This function returns the a object containing `firebaseUser` (Firebase User) and `userData` (User Profile Data).
+ * 
+ * @param {string} email 
+ * @param {string} password 
+ * @param {(result: object) => void} callback 
+ */
 export const loginUser = async (email, password, callback) => {
     await auth.signInWithEmailAndPassword(email, password)
         .catch((error) => {
