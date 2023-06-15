@@ -1,3 +1,9 @@
+/**
+ * `Chat` component fetches messages related to a specific symposium from Firebase, 
+ * displays them in a `FlatList`, and provides an `InputBox` for sending new messages.
+ * The header of the chat screen displays the symposium title and a back button.
+ */
+
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import Message from '../Chat/Message';
@@ -9,6 +15,10 @@ import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy }
 import { UserContext } from '../Contexts';
 
 
+/**
+ * This is a React component that retrieves messages from a Firebase database based on a symposium ID
+ * and updates the state with the retrieved messages.
+ */
 const Chat = ({ route, navigation }) => {
   const { sid, title } = route.params.symposium;
   const [messages, setMessages] = useState([]);
@@ -33,6 +43,11 @@ const Chat = ({ route, navigation }) => {
     }
   }, [sid]);
 
+  /**
+   * This function renders a message container with a message component inside, passing in item data, a
+   * boolean value indicating if the message belongs to the current user, and a function to handle
+   * voting.
+   */
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
       <View style={styles.message}>
@@ -44,6 +59,12 @@ const Chat = ({ route, navigation }) => {
       </View>
     </View>
   );
+
+  /**
+ * Handles the message sending operation. It sends the message to Firestore and updates the state.
+ * @param content - The message content.
+ * @returns In case of error while sending, it won't update the state. Otherwise, it adds the new message to the state.
+ */
 
   const handleSendMessage = async (content) => {
     if (sid) {
@@ -69,6 +90,12 @@ const Chat = ({ route, navigation }) => {
     }
   };
 
+ /**
+  * This function handles upvoting and downvoting of messages and updates the database accordingly.
+  * @param id - The id of the message being voted on.
+  * @param type - The type of vote, either "upvote" or "downvote".
+  */
+
   const handleVote = (id, type) => {
     const updatedMessages = messages.map((message) => {
       if (message.id === id) {
@@ -92,9 +119,12 @@ const Chat = ({ route, navigation }) => {
       return message;
     });
 
+    /* `setMessages(updatedMessages)` updates the state of the `messages` array with the new array of
+    messages that includes the updated vote counts for the message with the specified `id`. */
     setMessages(updatedMessages);
     setVoteStatus({ ...voteStatus, [id]: type });
 
+    /* This code block is updating the vote counts for a specific message in the Firebase database. */
     const messageToUpdate = updatedMessages.find((message) => message.id === id);
     if (messageToUpdate) {
       const messageRef = doc(collection(db, 'messages'), id);
@@ -108,9 +138,18 @@ const Chat = ({ route, navigation }) => {
     }
   }
 
+ /**
+  * This function handles going back one screen in a navigation stack.
+  */
   const handleGoBack = () => {
     navigation.dispatch(StackActions.pop(1));
   };
+
+ /**
+ * `Chat` component render function. It includes a View component with a header, FlatList for messages, and an InputBox for new messages. 
+ * The header features a back button and symposium title. FlatList renders messages using renderItem function. 
+ * InputBox uses handleSendMessage to send a new message.
+ */
 
   return (
     <View style={styles.container}>
@@ -130,6 +169,11 @@ const Chat = ({ route, navigation }) => {
     </View>
   );
 };
+
+/**
+ * `const styles` is an object containing style definitions for Chat's components, created using `StyleSheet.create()`.
+ * Each property corresponds to a component and holds its specific style rules, which are applied through the `style` prop.
+ */
 
 const styles = StyleSheet.create({
   container: {

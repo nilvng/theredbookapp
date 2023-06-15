@@ -1,6 +1,19 @@
+/**
+ * A React component rendering a voting view with upvote and downvote buttons, utilizing `react-native-paper`.
+ * It accepts `item` (voting information) and `onVote` (voting logic handler) as props.
+ * Returns a `View` with two `ButtonPaper` components styled via `StyleSheet`.
+ */
+
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { Button as ButtonPaper } from 'react-native-paper';
+
+/**
+ * `VoteView` is a functional React component accepting `item` and `onVote` as props. It renders a `View` 
+ * with two `ButtonPaper` components for upvote and downvote, each calling `onVote` with `item.id` and vote type.
+ * Vote counts are displayed using `item.upvotes` and `item.downvotes`. Styles are defined via `StyleSheet`.
+ */
+
 export default function VoteView({ item, onVote }) {
     return (
         <View style={styles.voteContainer}>
@@ -30,6 +43,11 @@ export default function VoteView({ item, onVote }) {
         </View>
     )
 }
+/**
+ * `const styles` creates a stylesheet for the `VoteView` component using `StyleSheet.create()`. 
+ * It optimizes `voteContainer` style for performance, defining `flexDirection` as `row` and `alignItems` as `center`.
+ */
+
 const styles = StyleSheet.create({
     voteContainer: {
         flexDirection: 'row',
