@@ -88,9 +88,9 @@ export default function Card({ navigation, data }) {
                 <View style={styles.detailContainer}>
                     <HStack>
                         {TextStackView(getSpeakers(data.host))}
-                        // Checks if the symposium's date has passed or is upcoming
-                        // If the symposium has yet to start, then a button to remind the user is displayed
-                        // Otherwise, a button to join the symposium is displayed
+                        {/* Checks if the symposium's date has passed or is upcoming
+                            If the symposium has yet to start, then a button to remind the user is displayed
+                            Otherwise, a button to join the symposium is displayed */}
                         {Date.parse(data.startDate) < Date.now() ? <Button
                             onPress={() => { navigation.navigate("Live", { symposium: data }); }}
                         >Join</Button> : <Button onPress={handleSetReminder}>Remind</Button>}

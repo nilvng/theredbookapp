@@ -65,15 +65,15 @@ export default function Archive({ navigation }) {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 
-                // Header
+                {/* Header */}
                 <HStack>
                     <Text style={styles.title}>Archive</Text>
                 </HStack>
 
-                // Renders the symposium list
+                {/* Renders the symposium list */}
                 <SymposiumList />
 
-                // Button to navigate back to the previous screen
+                {/* Button to navigate back to the previous screen */}
                 <HStack>
                     <Button style={[styles.button]} title="Go back" color="purple"
                         onPress={() => {
