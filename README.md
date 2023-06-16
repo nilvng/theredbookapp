@@ -13,6 +13,6 @@ URL to GitHub repo: <https://github.com/nilvng/theredbookapp>
 ## Running Instructions
 
 - Ensure you have node package manager installed
-- Type npm install in the project directory to install the relevant node packages
-- Type npm run to begin the application
+- Type `npm install` in the project directory to install the relevant node packages
+- Type `npm run` to begin the application, or `npm start`
 - A QR code will appear in the terminal which can be run with the expo app on your mobile device
