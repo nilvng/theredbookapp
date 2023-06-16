@@ -1,3 +1,11 @@
+/**
+ * Creat Symposium Modal
+ * 
+ * Present the view so the user can enter the information for a new symposium.
+ * This view will save the symposium to the database and dismiss on completion.
+ * The view will contain logic to validate user input, and will display alert prompt if invalid.
+ */
+
 import React, { useState } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, FlatList, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, IconButton, HStack } from "@react-native-material/core";

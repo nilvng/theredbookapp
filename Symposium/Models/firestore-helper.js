@@ -10,16 +10,34 @@ import { auth, db } from "../../firebase.config";
 
 const collectionName = "symposiums";
 
+/**
+ * Gets all symposiums
+ * 
+ * @return {[Symposium]}
+ */
 export const getSymposiums = async () => {
     const snapshot = await db.collection(collectionName).get();
     return snapshot.docs.map((doc) => doc.data());
 }
 
+/**
+ * Gets single symposium from firebase.
+ * 
+ * @param {string} uid 
+ * @return {Symposium}
+ */
 export const getSymposium = async (id) => {
     const snapshot = await db.collection(collectionName).doc(id).get();
     return snapshot.data();
 }
 
+
+/**
+ * Gets single symposium from firebase.
+ * 
+ * @param {Symposium} symposium 
+ * @return {object}
+ */
 export const addSymposium = async (symposium) => {
     await db.collection(collectionName)
         .add(symposium)

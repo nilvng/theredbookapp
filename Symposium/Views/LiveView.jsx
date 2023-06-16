@@ -1,3 +1,11 @@
+/**
+ * Pill-shaped floating view that displays the information of a symposium.
+ * 
+ * This view will be presented when the user clicks join a symposium.
+ * This view will contain logic to display a brief info of the symposium and dismiss on clicking on End.
+ * This view will display first 3 speakers, title of symposium
+ */
+
 import { View } from "react-native";
 import React from 'react';
 import { Image } from "react-native";
