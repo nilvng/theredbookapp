@@ -13,6 +13,7 @@ import { StackActions } from '@react-navigation/native';
 import { auth, db } from '../firebase.config';
 import { addDoc, collection, onSnapshot, query, where, doc, updateDoc, orderBy } from '@firebase/firestore';
 import { UserContext } from '../Contexts';
+import { Divider } from 'react-native-paper';
 
 
 /**
@@ -51,11 +52,11 @@ const Chat = ({ route, navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
       <View style={styles.message}>
-        <Message 
+        <Message
           item={item}
           isMyMessage={user.name == item.userName}
           onVote={handleVote}
-          />
+        />
       </View>
     </View>
   );
@@ -90,11 +91,11 @@ const Chat = ({ route, navigation }) => {
     }
   };
 
- /**
-  * This function handles upvoting and downvoting of messages and updates the database accordingly.
-  * @param id - The id of the message being voted on.
-  * @param type - The type of vote, either "upvote" or "downvote".
-  */
+  /**
+   * This function handles upvoting and downvoting of messages and updates the database accordingly.
+   * @param id - The id of the message being voted on.
+   * @param type - The type of vote, either "upvote" or "downvote".
+   */
 
   const handleVote = (id, type) => {
     const updatedMessages = messages.map((message) => {
@@ -138,18 +139,18 @@ const Chat = ({ route, navigation }) => {
     }
   }
 
- /**
-  * This function handles going back one screen in a navigation stack.
-  */
+  /**
+   * This function handles going back one screen in a navigation stack.
+   */
   const handleGoBack = () => {
     navigation.dispatch(StackActions.pop(1));
   };
 
- /**
- * `Chat` component render function. It includes a View component with a header, FlatList for messages, and an InputBox for new messages. 
- * The header features a back button and symposium title. FlatList renders messages using renderItem function. 
- * InputBox uses handleSendMessage to send a new message.
- */
+  /**
+  * `Chat` component render function. It includes a View component with a header, FlatList for messages, and an InputBox for new messages. 
+  * The header features a back button and symposium title. FlatList renders messages using renderItem function. 
+  * InputBox uses handleSendMessage to send a new message.
+  */
 
   return (
     <View style={styles.container}>
@@ -190,10 +191,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
-    textAlign: 'center',
+    fontSize: 20,
+    textAlign: 'left',
     marginBottom: 10,
-    marginLeft: 15
+    width: '80%',
   },
 
   messageContainer: {
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3EED9',
     borderRadius: 5,
     padding: 5,
-    margin: 10,
+    margin: 6,
     width: 50,
     alignItems: 'center',
   },
